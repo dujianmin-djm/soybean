@@ -139,7 +139,7 @@ Refer to the [Code Synchronization](https://docs.soybeanjs.cn/guide/sync) docume
 
 ## Ecosystem
 
-- [react-soybean-admin](https://github.com/mufeng889/react-soybean-admin): SoybeanAdmin based version of React.
+- [skyroc-admin](https://github.com/Ohh-889/skyroc-admin): SoybeanAdmin's React version implementation.
 - [electron-mock-admin](https://github.com/lixin59/electron-mock-api): A Mock Api management system that helps front-end developers quickly implement interface mocks.
 - [T-Shell](https://github.com/TheBlindM/T-Shell): A terminal emulator and SSH client with configurable command prompts.
 - [pea](https://github.com/haitang1894/pea) : Adopting SpringBoot3.2 + JDK21, MyBatis-Plus, SpringSecurity security framework, etc., suitable for the simple permission system developed by [soybean-admin](https://gitee.com/honghuangdc/soybean-admin).
@@ -150,6 +150,8 @@ Refer to the [Code Synchronization](https://docs.soybeanjs.cn/guide/sync) docume
 - [FastSoyAdmin](https://github.com/sleep1223/fast-soy-admin): A modern Management Platform based on FastAPI+Vue3+Naive UI.
 - [ba](https://github.com/xiatianYa/Ba-Server): Backend service docking with soybean admin based on goFrame framework, adapted to dynamic routing, and interface authentication permissions.
 - [soybean-admin-go](https://github.com/WgoW/soybean-admin-go):A Go backend service developed based on the Gin and GORM frameworks, integrated with the example branch of Soybean Admin. It supports dynamic routing and API permission authentication.
+
+More ecosystem please refer to [Ecosystem](https://docs.soybeanjs.cn/awesome) document.
 
 
 ## How to Contribute
@@ -180,13 +182,21 @@ Thanks the following people for their contributions. If you want to contribute t
   <img src="https://contrib.rocks/image?repo=soybeanjs/soybean-admin" />
 </a>
 
+---
+
+Here are the most active contributors from the past year. Thank you all for your support, which has enabled the project's continued development.
+
+<a href="https://openomy.com/soybeanjs/soybean-admin" target="_blank" style="display: block; width: 100%;" align="center">
+  <img src="https://www.openomy.com/svg?repo=soybeanjs/soybean-admin&chart=list&latestMonth=12" target="_blank" alt="Contribution Leaderboard" style="display: block; width: 100%;" />
+</a>
+
 ## Communication
 
 `SoybeanAdmin` is a completely open source and free project, helping developers to develop medium and large-scale management systems more conveniently. It also provides WeChat and QQ communication groups. If you have any questions, please feel free to ask in the group.
 
   <div>
   	<p>QQ Group</p>
-    <img src="https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/qq-soybean-admin-4.jpg" style="width:200px" />
+    <img src="https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/qq-soybean-admin-5.jpg" style="width:200px" />
   </div>
 	<!-- <div>
 		<p>WeChat Group</p>

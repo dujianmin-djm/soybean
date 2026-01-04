@@ -165,7 +165,7 @@ pnpm build
 
 ## 周边生态
 
-- [react-soybean-admin](https://github.com/mufeng889/react-soybean-admin): 基于SoybeanAdmin的React版本.
+- [skyroc-admin](https://github.com/Ohh-889/skyroc-admin): SoybeanAdmin的React版本实现.
 - [electron-mock-admin](https://github.com/lixin59/electron-mock-api): 一个 Mock Api 管理系统，帮助前端开发伙伴快速实现接口的 mock。
 - [T-Shell](https://github.com/TheBlindM/T-Shell): 是一个可配置命令提示的终端模拟器和 SSH 客户端。
 - [pea](https://github.com/haitang1894/pea) : 采用SpringBoot3.2 + JDK21、MyBatis-Plus、SpringSecurity安全框架等，适配 [soybean-admin](https://gitee.com/honghuangdc/soybean-admin) 开发的简单权限系统。
@@ -176,6 +176,8 @@ pnpm build
 - [FastSoyAdmin](https://github.com/sleep1223/fast-soy-admin): 基于 FastAPI+Vue3+Naive UI 的现代化轻量管理平台.
 - [ba](https://github.com/xiatianYa/Ba-Server): 基于goFrame框架开发的后端服务对接soybean-admin,适配动态路由,接口鉴权限。
 - [soybean-admin-go](https://github.com/WgoW/soybean-admin-go):基于gin+gorm框架开发的go语言后端服务对接soybean-admin的example分支,适配动态路由,接口鉴权限。
+
+更多周边生态请翻阅 [周边生态](https://docs.soybeanjs.cn/zh/awesome) 文档。
 
 
 ## 如何贡献
@@ -208,13 +210,21 @@ pnpm build
   <img src="https://contrib.rocks/image?repo=soybeanjs/soybean-admin" />
 </a>
 
+---
+
+以下是近一年中活跃度较高的贡献者，感谢各位的支持，让项目得以持续发展。
+
+<a href="https://openomy.com/soybeanjs/soybean-admin" target="_blank" style="display: block; width: 100%;" align="center">
+  <img src="https://www.openomy.com/svg?repo=soybeanjs/soybean-admin&chart=list&latestMonth=12" target="_blank" alt="Contribution Leaderboard" style="display: block; width: 100%;" />
+</a>
+
 ## 交流
 
 `SoybeanAdmin` 是完全开源免费的项目，在帮助开发者更方便地进行中大型管理系统开发，同时也提供微信和 QQ 交流群，使用问题欢迎在群内提问。
 
   <div>
   	<p>QQ交流群</p>
-    <img src="https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/qq-soybean-admin-4.jpg" style="width:200px" />
+    <img src="https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/qq-soybean-admin-5.jpg" style="width:200px" />
   </div>
 	<!-- <div>
 		<p>微信群</p>
