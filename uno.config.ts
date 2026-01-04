@@ -23,8 +23,13 @@ export default defineConfig<Theme>({
     }
   },
   shortcuts: {
-    'card-wrapper': 'rd-8px shadow-sm'
+    'card-wrapper': 'rd-8px shadow-sm',
+    'fs-dudu': 'fs-30px fw-600'
   },
   transformers: [transformerDirectives(), transformerVariantGroup()],
+  rules: [
+    ['fs-30px', { 'font-size': '30px', color: 'red' }],
+    [/^fs-([.\d]+)$/, ([_, num]) => ({ 'font-size': `${num}px` })]
+  ],
   presets: [presetWind3({ dark: 'class' }), presetSoybeanAdmin()]
 });
