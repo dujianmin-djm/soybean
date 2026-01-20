@@ -86,9 +86,8 @@ async function getOrgData() {
     } else {
       message.error(`获取组织数据失败${result.message}`);
     }
-  } catch (err) {
+  } catch {
     message.error('网络请求出错');
-    console.error('获取组织数据错误:', err);
   } finally {
     loading.value = false;
   }
@@ -124,9 +123,8 @@ async function getCustomerData() {
     } else {
       message.error(`获取客户数据失败: ${result.message}`);
     }
-  } catch (err) {
+  } catch {
     message.error('网络请求出错');
-    console.error('获取客户数据错误:', err);
   }
 }
 
@@ -134,7 +132,7 @@ async function getCustomerData() {
 async function getDatacenterList() {
   try {
     const response = await fetch(
-      '/proxy-galaxy/Kingdee.BOS.ServiceFacade.ServicesStub.Account.AccountService.GetDataCenterList.common.kdsvc'
+      '/proxy-k3cloud/Kingdee.BOS.ServiceFacade.ServicesStub.Account.AccountService.GetDataCenterList.common.kdsvc'
     );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -145,17 +143,17 @@ async function getDatacenterList() {
       content: JSON.stringify(result, null, 2),
       duration: 0
     });
-    console.log('数据中心列表:', result);
-  } catch (err) {
+  } catch (error) {
     message.error('网络请求出错');
-    console.error('获取数据中心列表错误:', err);
+    // eslint-disable-next-line
+    console.error(error);
   }
 }
 
 onMounted(() => {
   getOrgData();
-  // getCustomerData();
-  // getDatacenterList();
+  getCustomerData();
+  getDatacenterList();
 });
 </script>
 
