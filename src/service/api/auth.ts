@@ -1,25 +1,38 @@
 import { request } from '../request';
 
 /**
+ * 获取 RSA 公钥
+ */
+export function fetchPublicKey() {
+  return request<Api.Auth.PublicKey>({
+    url: '/papi/auth/public-key',
+    method: 'get'
+  });
+}
+
+/**
  * Login
  *
- * @param userName User name
+ * @param userName User name or email
  * @param password Password
+ * @param isEncrypted Whether the password is encrypted
  */
-export function fetchLogin(userName: string, password: string) {
+export function fetchLogin(userNameOrEmail: string, password: string, isEncrypted = true) {
   return request<Api.Auth.LoginToken>({
-    url: '/auth/login',
+    url: '/papi/auth/login',
     method: 'post',
     data: {
-      userName,
-      password
+      userNameOrEmail,
+      password,
+      isEncrypted
+      // clientId: 'Pms_Spa'
     }
   });
 }
 
 /** Get user info */
 export function fetchGetUserInfo() {
-  return request<Api.Auth.UserInfo>({ url: '/auth/getUserInfo' });
+  return request<Api.Auth.UserInfo>({ url: '/papi/auth/user-info' });
 }
 
 /**
@@ -29,10 +42,35 @@ export function fetchGetUserInfo() {
  */
 export function fetchRefreshToken(refreshToken: string) {
   return request<Api.Auth.LoginToken>({
-    url: '/auth/refreshToken',
+    url: '/papi/auth/refresh-token',
     method: 'post',
     data: {
       refreshToken
+    }
+  });
+}
+
+/**
+ * Logout
+ */
+export function fetchLogout() {
+  return request({
+    url: '/papi/auth/logout',
+    method: 'post'
+  });
+}
+
+/**
+ * Revoke token
+ *
+ * @param accessToken Access token
+ */
+export function fetchRevokeToken(accessToken: string) {
+  return request({
+    url: '/papi/auth/revoke-token',
+    method: 'post',
+    data: {
+      accessToken
     }
   });
 }
@@ -44,5 +82,5 @@ export function fetchRefreshToken(refreshToken: string) {
  * @param msg error message
  */
 export function fetchCustomBackendError(code: string, msg: string) {
-  return request({ url: '/auth/error', params: { code, msg } });
+  return request({ url: '/papi/auth/error', params: { code, msg } });
 }

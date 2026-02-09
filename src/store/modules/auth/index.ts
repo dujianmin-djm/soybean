@@ -2,9 +2,10 @@ import { computed, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { defineStore } from 'pinia';
 import { useLoading } from '@sa/hooks';
-import { fetchGetUserInfo, fetchLogin } from '@/service/api';
+import { fetchGetUserInfo, fetchLogin, fetchPublicKey } from '@/service/api';
 import { useRouterPush } from '@/hooks/common/router';
 import { localStg } from '@/utils/storage';
+import { encryptWithRSA, getCachedPublicKey, setPublicKey } from '@/utils/crypto';
 import { SetupStoreId } from '@/enum';
 import { $t } from '@/locales';
 import { useRouteStore } from '../route';
@@ -22,8 +23,10 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   const token = ref(getToken());
 
   const userInfo: Api.Auth.UserInfo = reactive({
-    userId: '',
+    id: '',
     userName: '',
+    email: '',
+    phoneNumber: '',
     roles: [],
     buttons: []
   });
@@ -56,12 +59,12 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
   /** Record the user ID of the previous login session Used to compare with the current user ID on next login */
   function recordUserId() {
-    if (!userInfo.userId) {
+    if (!userInfo.id) {
       return;
     }
 
     // Store current user ID locally for next login comparison
-    localStg.set('lastLoginUserId', userInfo.userId);
+    localStg.set('lastLoginUserId', userInfo.id);
   }
 
   /**
@@ -70,14 +73,14 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
    * @returns {boolean} Whether to clear all tabs
    */
   function checkTabClear(): boolean {
-    if (!userInfo.userId) {
+    if (!userInfo.id) {
       return false;
     }
 
     const lastLoginUserId = localStg.get('lastLoginUserId');
 
     // Clear all tabs if current user is different from previous user
-    if (!lastLoginUserId || lastLoginUserId !== userInfo.userId) {
+    if (!lastLoginUserId || lastLoginUserId !== userInfo.id) {
       localStg.remove('globalTabs');
       tabStore.clearTabs();
 
@@ -90,38 +93,73 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   }
 
   /**
+   * 获取公钥
+   */
+  async function getPublicKey(): Promise<string> {
+    // 检查缓存
+    const cached = getCachedPublicKey();
+    if (cached) {
+      return cached;
+    }
+
+    // 请求新公钥
+    const { data, error } = await fetchPublicKey();
+    if (error || !data) {
+      throw new Error('获取公钥失败');
+    }
+
+    // 缓存公钥
+    setPublicKey(data.publicKey, data.expiresAt);
+    return data.publicKey;
+  }
+
+  /**
    * Login
    *
    * @param userName User name
    * @param password Password
    * @param [redirect=true] Whether to redirect after login. Default is `true`
    */
-  async function login(userName: string, password: string, redirect = true) {
+  async function login(userNameOrEmail: string, password: string, redirect = true) {
     startLoading();
 
-    const { data: loginToken, error } = await fetchLogin(userName, password);
+    try {
+      // 1. 获取公钥
+      const publicKey = await getPublicKey();
 
-    if (!error) {
-      const pass = await loginByToken(loginToken);
+      // 2. 加密密码
+      const encryptedPassword = encryptWithRSA(publicKey, password);
 
-      if (pass) {
-        // Check if the tab needs to be cleared
-        const isClear = checkTabClear();
-        let needRedirect = redirect;
+      // 3. 发送登录请求
+      const { data: loginToken, error } = await fetchLogin(userNameOrEmail, encryptedPassword, true);
 
-        if (isClear) {
-          // If the tab needs to be cleared,it means we don't need to redirect.
-          needRedirect = false;
+      if (!error) {
+        const pass = await loginByToken(loginToken);
+
+        if (pass) {
+          // Check if the tab needs to be cleared
+          const isClear = checkTabClear();
+          let needRedirect = redirect;
+
+          if (isClear) {
+            // If the tab needs to be cleared,it means we don't need to redirect.
+            needRedirect = false;
+          }
+          await redirectFromLogin(needRedirect);
+
+          window.$notification?.success({
+            title: $t('page.login.common.loginSuccess'),
+            content: $t('page.login.common.welcomeBack', { userName: userInfo.userName }),
+            duration: 4500
+          });
         }
-        await redirectFromLogin(needRedirect);
-
-        window.$notification?.success({
-          title: $t('page.login.common.loginSuccess'),
-          content: $t('page.login.common.welcomeBack', { userName: userInfo.userName }),
-          duration: 4500
-        });
+      } else {
+        resetStore();
       }
-    } else {
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('登录失败:', err);
+      window.$message?.error('登录失败，请重试');
       resetStore();
     }
 
@@ -130,14 +168,14 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
   async function loginByToken(loginToken: Api.Auth.LoginToken) {
     // 1. stored in the localStorage, the later requests need it in headers
-    localStg.set('token', loginToken.token);
+    localStg.set('accessToken', loginToken.accessToken);
     localStg.set('refreshToken', loginToken.refreshToken);
 
-    // 2. get user info
+    // 2. getUserInfo
     const pass = await getUserInfo();
 
     if (pass) {
-      token.value = loginToken.token;
+      token.value = loginToken.accessToken;
 
       return true;
     }
@@ -151,7 +189,6 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     if (!error) {
       // update store
       Object.assign(userInfo, info);
-
       return true;
     }
 

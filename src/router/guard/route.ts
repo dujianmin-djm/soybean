@@ -31,7 +31,7 @@ export function createRouteGuard(router: Router) {
     const loginRoute: RouteKey = 'login';
     const noAuthorizationRoute: RouteKey = '403';
 
-    const isLogin = Boolean(localStg.get('token'));
+    const isLogin = Boolean(localStg.get('accessToken'));
     const needLogin = !to.meta.constant;
     const routeRoles = to.meta.roles || [];
 
@@ -95,7 +95,7 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
     return location;
   }
 
-  const isLogin = Boolean(localStg.get('token'));
+  const isLogin = Boolean(localStg.get('accessToken'));
 
   if (!isLogin) {
     // if the user is not logged in and the route is a constant route but not the "not-found" route, then it is allowed to access.

@@ -56,7 +56,7 @@ export function useFormRules() {
     const confirmPwdRule: App.Global.FormRule[] = [
       { required: true, message: $t('form.confirmPwd.required') },
       {
-        asyncValidator: (rule, value) => {
+        asyncValidator: (rule: App.Global.FormRule, value: string) => {
           if (value.trim() !== '' && value !== toValue(pwd)) {
             return Promise.reject(rule.message);
           }
