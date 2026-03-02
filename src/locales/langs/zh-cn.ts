@@ -1,6 +1,6 @@
 const local: App.I18n.Schema = {
   system: {
-    title: 'Soybean 管理系统',
+    title: '项目管理系统',
     updateTitle: '系统版本更新通知',
     updateContent: '检测到系统有新版本发布，是否立即刷新页面？',
     updateConfirm: '立即刷新',
@@ -9,7 +9,7 @@ const local: App.I18n.Schema = {
   common: {
     action: '操作',
     add: '新增',
-    addSuccess: '添加成功',
+    addSuccess: '新增成功',
     backToHome: '返回首页',
     batchDelete: '批量删除',
     cancel: '取消',
@@ -22,7 +22,9 @@ const local: App.I18n.Schema = {
     delete: '删除',
     deleteSuccess: '删除成功',
     confirmDelete: '确认删除吗？',
+    partialDeleteWarning: '部分记录删除失败，请检查后重试',
     edit: '编辑',
+    success: '成功',
     warning: '警告',
     error: '错误',
     index: '序号',
@@ -43,10 +45,44 @@ const local: App.I18n.Schema = {
     trigger: '触发',
     update: '更新',
     updateSuccess: '更新成功',
+    noPermission: '没有操作权限',
     userCenter: '个人中心',
     yesOrNo: {
       yes: '是',
       no: '否'
+    },
+    save: '保存',
+    saveSuccess: '保存成功',
+    'save-auto-generated': '保存自动生成',
+    submit: '提交',
+    submitSuccess: '提交成功',
+    approve: '审核',
+    approveSuccess: '审核成功',
+    list: '列表',
+    resetPassword: '重置密码',
+    confirmResetPassword: '确定要重置这 {count} 个用户的密码为默认密码吗？',
+    resetPasswordSuccess: '重置密码成功',
+    partialFailure: '部分操作失败：{details}',
+    detail: '详情',
+    creatorName: '创建人',
+    creationTime: '创建时间',
+    lastModifierName: '最后修改人',
+    lastModificationTime: '最后修改时间',
+    approverName: '审核人',
+    approvalTime: '审核时间',
+    selectAll: '全选',
+    selectRequired: '请至少选择一条记录',
+    documentStatus: {
+      title: '单据状态',
+      created: '创建',
+      submitted: '已提交',
+      approved: '已审核'
+    },
+    tabs: {
+      basic: '基本信息',
+      other: '其他信息',
+      entry: '明细信息',
+      attachment: '附件信息'
     }
   },
   request: {
@@ -225,6 +261,16 @@ const local: App.I18n.Schema = {
     500: '服务器错误',
     'iframe-page': '外链页面',
     home: '首页',
+    'user-center': '个人中心',
+    manage: '系统管理',
+    manage_user: '用户管理',
+    'manage_user-detail': '用户详情',
+    manage_role: '角色管理',
+    basedata: '基础管理',
+    basedata_department: '部门',
+    'basedata_department-detail': '部门详情',
+    basedata_position: '岗位',
+    basedata_employee: '员工',
     test: '测试页'
   },
   page: {
@@ -277,7 +323,7 @@ const local: App.I18n.Schema = {
     home: {
       branchDesc:
         '为了方便大家开发和更新合并，我们对main分支的代码进行了精简，只保留了首页菜单，其余内容已移至example分支进行维护。预览地址显示的内容即为example分支的内容。',
-      greeting: '早安，{userName}, 今天又是充满活力的一天!',
+      greeting: '嗨，{userName}, 今天又是充满活力的一天!',
       weatherDesc: '今日多云转晴，20℃ - 25℃!',
       projectCount: '项目数',
       todo: '待办',
@@ -302,6 +348,93 @@ const local: App.I18n.Schema = {
         desc5: 'Soybean 刚才把工作台页面随便写了一些，凑合能看了！'
       },
       creativity: '创意'
+    },
+    manage: {
+      common: {
+        status: {
+          enable: '启用',
+          disable: '禁用'
+        }
+      },
+      role: {
+        title: '角色列表',
+        roleName: '角色名称',
+        roleCode: '角色编码',
+        roleStatus: '角色状态',
+        roleDesc: '角色描述',
+        rolePublic: '公共角色',
+        roleDefault: '默认角色',
+        form: {
+          roleName: '请输入角色名称',
+          roleCode: '请输入角色编码',
+          roleStatus: '请选择角色状态',
+          roleDesc: '请输入角色描述'
+        },
+        addRole: '新增角色',
+        editRole: '编辑角色',
+        menuAuth: '菜单权限',
+        buttonAuth: '按钮权限',
+        permissionAuth: '授权',
+        roleAuth: '角色授权',
+        selectAllPermission: '选择所有权限',
+        noPermissionData: '暂无权限数据'
+      },
+      user: {
+        title: '用户列表',
+        userName: '用户名',
+        userGender: '性别',
+        description: '描述',
+        userPhone: '手机号',
+        userEmail: '邮箱',
+        userStatus: '用户状态',
+        userRole: '用户角色',
+        form: {
+          userName: '请输入用户名',
+          userGender: '请选择性别',
+          description: '请输入描述',
+          userPhone: '请输入手机号',
+          userEmail: '请输入邮箱',
+          userStatus: '请选择用户状态',
+          userRole: '请选择用户角色'
+        },
+        addUser: '新增用户',
+        editUser: '编辑用户',
+        gender: {
+          unknown: '未知',
+          male: '男',
+          female: '女'
+        }
+      }
+    },
+    userCenter: {
+      profileTitle: '个人信息',
+      changePasswordTitle: '修改密码',
+      currentPassword: '当前密码',
+      newPassword: '新密码',
+      confirmPassword: '确认密码',
+      changePassword: '修改密码',
+      changePasswordSuccessLogoutTip: '密码修改成功，请重新登录系统！',
+      form: {
+        currentPasswordRequired: '请输入当前密码'
+      }
+    },
+    basedata: {
+      department: {
+        title: '部门列表',
+        name: '部门名称',
+        number: '部门编号',
+        description: '部门描述',
+        parentName: '上级部门',
+        fullName: '部门全名',
+        form: {
+          name: '请输入部门名称',
+          number: '请输入部门编号',
+          description: '请输入部门描述',
+          parentId: '请选择上级部门'
+        },
+        addDepartment: '部门-新增',
+        editDepartment: '部门-修改'
+      }
     }
   },
   form: {
@@ -316,7 +449,7 @@ const local: App.I18n.Schema = {
     },
     pwd: {
       required: '请输入密码',
-      invalid: '密码格式不正确，6-18位字符，包含字母、数字、下划线和!@#$%^&*()等特殊字符'
+      invalid: '密码格式不正确，6-18位字符，包含字母、数字、下划线和一些特殊字符'
     },
     confirmPwd: {
       required: '请输入确认密码',

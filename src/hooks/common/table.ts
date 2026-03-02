@@ -89,10 +89,10 @@ export function useNaivePaginatedTable<ResponseData, ApiData>(
 
   const pagination = reactive({
     page: 1,
-    pageSize: 10,
+    pageSize: 20,
     itemCount: 0,
     showSizePicker: true,
-    pageSizes: [10, 15, 20, 25, 30],
+    pageSizes: [20, 50, 200, 500, 1000],
     prefix: showTotal.value ? page => $t('datatable.itemCount', { total: page.itemCount }) : undefined,
     onUpdatePage(page) {
       pagination.page = page;
@@ -108,7 +108,7 @@ export function useNaivePaginatedTable<ResponseData, ApiData>(
   const mobilePagination = computed(() => {
     const p: PaginationProps = {
       ...pagination,
-      pageSlot: isMobile.value ? 3 : 9,
+      pageSlot: isMobile.value ? 3 : 5,
       prefix: !isMobile.value && showTotal.value ? pagination.prefix : undefined
     };
 
@@ -236,10 +236,10 @@ export function defaultTransform<ApiData>(
   const { data, error } = response;
 
   if (!error) {
-    const { records, current, size, total } = data;
+    const { items, current, size, total } = data;
 
     return {
-      data: records,
+      data: items,
       pageNum: current,
       pageSize: size,
       total
@@ -249,7 +249,7 @@ export function defaultTransform<ApiData>(
   return {
     data: [],
     pageNum: 1,
-    pageSize: 10,
+    pageSize: 20,
     total: 0
   };
 }

@@ -20,10 +20,20 @@ declare module "@elegant-router/types" {
     "403": "/403";
     "404": "/404";
     "500": "/500";
+    "basedata": "/basedata";
+    "basedata_department": "/basedata/department";
+    "basedata_department-detail": "/basedata/department-detail/:id";
+    "basedata_employee": "/basedata/employee";
+    "basedata_position": "/basedata/position";
     "home": "/home";
     "iframe-page": "/iframe-page/:url";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
+    "manage": "/manage";
+    "manage_role": "/manage/role";
+    "manage_user": "/manage/user";
+    "manage_user-detail": "/manage/user-detail/:id";
     "test": "/test";
+    "user-center": "/user-center";
   };
 
   /**
@@ -58,10 +68,13 @@ declare module "@elegant-router/types" {
     | "403"
     | "404"
     | "500"
+    | "basedata"
     | "home"
     | "iframe-page"
     | "login"
+    | "manage"
     | "test"
+    | "user-center"
   >;
 
   /**
@@ -83,8 +96,16 @@ declare module "@elegant-router/types" {
     | "500"
     | "iframe-page"
     | "login"
+    | "basedata_department-detail"
+    | "basedata_department"
+    | "basedata_employee"
+    | "basedata_position"
     | "home"
+    | "manage_role"
+    | "manage_user-detail"
+    | "manage_user"
     | "test"
+    | "user-center"
   >;
 
   /**

@@ -1,6 +1,6 @@
 const local: App.I18n.Schema = {
   system: {
-    title: 'SoybeanAdmin',
+    title: 'Project Management',
     updateTitle: 'System Version Update Notification',
     updateContent: 'A new version of the system has been detected. Do you want to refresh the page immediately?',
     updateConfirm: 'Refresh immediately',
@@ -22,7 +22,9 @@ const local: App.I18n.Schema = {
     delete: 'Delete',
     deleteSuccess: 'Delete Success',
     confirmDelete: 'Are you sure you want to delete?',
+    partialDeleteWarning: 'Some records failed to be deleted. Please check and try again.',
     edit: 'Edit',
+    success: 'Success',
     warning: 'Warning',
     error: 'Error',
     index: 'Index',
@@ -43,10 +45,44 @@ const local: App.I18n.Schema = {
     trigger: 'Trigger',
     update: 'Update',
     updateSuccess: 'Update Success',
+    noPermission: 'No Permission',
     userCenter: 'User Center',
     yesOrNo: {
       yes: 'Yes',
       no: 'No'
+    },
+    save: 'Save',
+    saveSuccess: 'Save Success',
+    'save-auto-generated': 'Automatically generated upon saving',
+    submit: 'Submit',
+    submitSuccess: 'Submit Success',
+    approve: 'Approve',
+    approveSuccess: 'Approve Success',
+    list: 'List',
+    resetPassword: 'Reset Password',
+    confirmResetPassword: 'Are you sure you want to reset password for these {count} users?',
+    resetPasswordSuccess: 'Reset password successfully',
+    partialFailure: 'Some operations failed: {details}',
+    detail: 'Detail',
+    creatorName: 'Created By',
+    creationTime: 'Creation Time',
+    lastModifierName: 'Last Modified By',
+    lastModificationTime: 'Last Modification Time',
+    approverName: 'Approver',
+    approvalTime: 'Approval Time',
+    selectRequired: 'Please select at least one record',
+    selectAll: 'Select All',
+    documentStatus: {
+      title: 'Document Status',
+      created: 'Created',
+      submitted: 'Submitted',
+      approved: 'Approved'
+    },
+    tabs: {
+      basic: 'Basic Information',
+      other: 'Other Information',
+      entry: 'Entry Information',
+      attachment: 'Attachment Information'
     }
   },
   request: {
@@ -229,6 +265,16 @@ const local: App.I18n.Schema = {
     500: 'Server Error',
     'iframe-page': 'Iframe',
     home: 'Home',
+    'user-center': 'User Center',
+    manage: 'System Manage',
+    manage_user: 'User Manage',
+    'manage_user-detail': 'User Detail',
+    manage_role: 'Role Manage',
+    basedata: 'Base Data',
+    basedata_department: 'Department',
+    'basedata_department-detail': 'Department Detail',
+    basedata_position: 'Position',
+    basedata_employee: 'Employee',
     test: 'test'
   },
   page: {
@@ -306,6 +352,93 @@ const local: App.I18n.Schema = {
         desc5: 'Soybean just wrote some of the workbench pages casually, and it was enough to see!'
       },
       creativity: 'Creativity'
+    },
+    manage: {
+      common: {
+        status: {
+          enable: 'Enable',
+          disable: 'Disable'
+        }
+      },
+      role: {
+        title: 'Role List',
+        roleName: 'Role Name',
+        roleCode: 'Role Code',
+        roleStatus: 'Role Status',
+        roleDesc: 'Role Description',
+        rolePublic: 'Public Role',
+        roleDefault: 'Default Role',
+        form: {
+          roleName: 'Please enter role name',
+          roleCode: 'Please enter role code',
+          roleStatus: 'Please select role status',
+          roleDesc: 'Please enter role description'
+        },
+        addRole: 'Add Role',
+        editRole: 'Edit Role',
+        menuAuth: 'Menu Auth',
+        buttonAuth: 'Button Auth',
+        permissionAuth: 'Permission Auth',
+        roleAuth: 'Role Auth',
+        selectAllPermission: 'Select All Permissions',
+        noPermissionData: 'No Permission Data'
+      },
+      user: {
+        title: 'User List',
+        userName: 'User Name',
+        userGender: 'Gender',
+        description: 'Description',
+        userPhone: 'Phone Number',
+        userEmail: 'Email',
+        userStatus: 'User Status',
+        userRole: 'User Role',
+        form: {
+          userName: 'Please enter user name',
+          userGender: 'Please select gender',
+          description: 'Please enter description',
+          userPhone: 'Please enter phone number',
+          userEmail: 'Please enter email',
+          userStatus: 'Please select user status',
+          userRole: 'Please select user role'
+        },
+        addUser: 'Add User',
+        editUser: 'Edit User',
+        gender: {
+          unknown: 'Unknown',
+          male: 'Male',
+          female: 'Female'
+        }
+      }
+    },
+    userCenter: {
+      profileTitle: 'Profile',
+      changePasswordTitle: 'Change Password',
+      currentPassword: 'Current Password',
+      newPassword: 'New Password',
+      confirmPassword: 'Confirm Password',
+      changePassword: 'Change Password',
+      changePasswordSuccessLogoutTip: 'Password changed successfully, please log in again!',
+      form: {
+        currentPasswordRequired: 'Please enter current password'
+      }
+    },
+    basedata: {
+      department: {
+        title: 'Department List',
+        name: 'Department Name',
+        number: 'Department Number',
+        description: 'Department Description',
+        parentName: 'Parent Department',
+        fullName: 'Full Department Name',
+        form: {
+          name: 'Please enter department name',
+          number: 'Please enter department number',
+          description: 'Please enter department description',
+          parentId: 'Please select parent department'
+        },
+        addDepartment: 'Add Department',
+        editDepartment: 'Edit Department'
+      }
     }
   },
   form: {
@@ -320,7 +453,7 @@ const local: App.I18n.Schema = {
     },
     pwd: {
       required: 'Please enter password',
-      invalid: '6-18 characters, including letters, numbers, underscores and !@#$%^&*() characters'
+      invalid: '6-18 characters, including letters, numbers, underscores and special characters'
     },
     confirmPwd: {
       required: 'Please enter password again',

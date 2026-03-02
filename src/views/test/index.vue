@@ -83,6 +83,7 @@ async function getOrgData() {
     if (result?.isSuccess) {
       orgDataList.value = result.items;
       message.success(`成功加载 ${result.items.length} 条组织数据`);
+      // window.$message?.error("error.message");
     } else {
       message.error(`获取组织数据失败${result.message}`);
     }

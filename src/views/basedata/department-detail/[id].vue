@@ -1,0 +1,294 @@
+<script setup lang="ts">
+import { computed, onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import dayjs from 'dayjs';
+import { documentStatusRecord } from '@/constants/business';
+import { PERMISSIONS } from '@/constants/permissions';
+import { fetchCreateDepartment, fetchGetDepartment, fetchUpdateDepartment } from '@/service/api';
+import { useTabStore } from '@/store/modules/tab';
+import { useFormRules, useNaiveForm } from '@/hooks/common/form';
+import { useRouterPush } from '@/hooks/common/router';
+import { usePermission } from '@/hooks/common/permission';
+import { $t } from '@/locales';
+import ParentSelectModal from './modules/parent-select-modal.vue';
+
+interface Props {
+  id: string;
+}
+
+const props = defineProps<Props>();
+const route = useRoute();
+const router = useRouter();
+const tabStore = useTabStore();
+const { routerPushByKey } = useRouterPush();
+const { permissions } = usePermission(PERMISSIONS.BaseData.Departments);
+
+const { formRef, validate } = useNaiveForm();
+const { defaultRequiredRule } = useFormRules();
+
+const isEdit = computed(() => props.id !== 'add');
+const loading = ref(false);
+const saving = ref(false);
+const parentModalVisible = ref(false);
+const activeTab = ref('basic');
+
+const rawData = ref<Api.BaseData.Department | null>(null);
+
+type Model = Api.BaseData.DepartmentCreate;
+
+const model = ref<Model>(createDefaultModel());
+
+function createDefaultModel(): Model {
+  return {
+    number: '',
+    name: '',
+    description: '',
+    parentId: '',
+    parentName: '',
+    fullName: ''
+  };
+}
+
+type RuleKey = Extract<keyof Model, 'number' | 'name'>;
+
+const rules = computed<Record<RuleKey, App.Global.FormRule[]>>(() => ({
+  number: [defaultRequiredRule],
+  name: [defaultRequiredRule]
+}));
+
+function updateTabTitle() {
+  const title = isEdit.value
+    ? $t('page.basedata.department.editDepartment')
+    : $t('page.basedata.department.addDepartment');
+
+  tabStore.setTabLabel(title, route.fullPath);
+}
+
+async function fetchDetail() {
+  if (!isEdit.value) return;
+
+  loading.value = true;
+  const { data, error } = await fetchGetDepartment(props.id);
+  if (!error && data) {
+    rawData.value = data;
+    model.value = {
+      number: data.number ?? '',
+      name: data.name ?? '',
+      description: data.description ?? '',
+      parentId: data.parentId ?? '',
+      parentName: data.parentName ?? '',
+      fullName: data.fullName ?? ''
+    };
+  }
+  loading.value = false;
+}
+
+function handleParentSelected(dept: { id: string; name: string }) {
+  model.value.parentId = dept.id;
+  model.value.parentName = dept.name;
+}
+
+function handleClearParent() {
+  model.value.parentId = '';
+  model.value.parentName = '';
+}
+
+async function handleSave() {
+  await validate();
+  saving.value = true;
+
+  if (isEdit.value) {
+    const { error, data } = await fetchUpdateDepartment(props.id, {
+      ...model.value,
+      concurrencyStamp: rawData.value!.concurrencyStamp
+    });
+    if (!error) {
+      window.$message?.success($t('common.updateSuccess'));
+      rawData.value = data;
+      model.value.fullName = data.fullName;
+    }
+  } else {
+    const { error, data } = await fetchCreateDepartment(model.value);
+    if (!error) {
+      window.$message?.success($t('common.addSuccess'));
+      // 新增成功后跳转到编辑模式（replace 不新增历史记录）
+      router.replace(`/basedata/department-detail/${data.id}`);
+    }
+  }
+  saving.value = false;
+}
+
+async function handleSubmit() {
+  // eslint-disable-next-line no-warning-comments
+  // TODO: 调用提交接口 下拉按钮
+  window.$message?.info('提交功能待实现');
+}
+
+async function handleApprove() {
+  // eslint-disable-next-line no-warning-comments
+  // TODO: 调用审核接口
+  window.$message?.info('审核功能待实现');
+}
+
+function handleGoList() {
+  routerPushByKey('basedata_department');
+}
+
+onMounted(() => {
+  fetchDetail();
+  updateTabTitle();
+});
+</script>
+
+<template>
+  <div class="min-h-500px flex-col-stretch gap-8px overflow-hidden lt-sm:overflow-auto">
+    <NCard :bordered="false" size="small" class="card-wrapper">
+      <div class="flex items-center justify-between">
+        <NSpace :size="12">
+          <NButton v-if="permissions.Create || permissions.Update" type="primary" :loading="saving" @click="handleSave">
+            <template #icon>
+              <SvgIcon icon="ic:round-save" />
+            </template>
+            {{ $t('common.save') }}
+          </NButton>
+          <NButton v-if="permissions.Submit" type="primary" :disabled="!isEdit" @click="handleSubmit">
+            <template #icon>
+              <SvgIcon icon="ic:round-send" />
+            </template>
+            {{ $t('common.submit') }}
+          </NButton>
+          <NButton v-if="permissions.Audit" type="primary" :disabled="!isEdit" @click="handleApprove">
+            <template #icon>
+              <SvgIcon icon="ic:round-check-circle" />
+            </template>
+            {{ $t('common.approve') }}
+          </NButton>
+        </NSpace>
+        <NButton quaternary @click="handleGoList">
+          <template #icon>
+            <SvgIcon icon="ic:round-format-list-bulleted" />
+          </template>
+          {{ $t('common.list') }}
+        </NButton>
+      </div>
+    </NCard>
+
+    <NCard :bordered="false" size="small" class="flex-1 card-wrapper sm:flex-1-hidden">
+      <NSpin :show="loading" class="h-full">
+        <NTabs v-model:value="activeTab" type="line" placement="left" animated class="h-full">
+          <NTabPane name="basic" :tab="$t('common.tabs.basic')">
+            <NForm
+              ref="formRef"
+              :model="model"
+              :rules="rules"
+              label-placement="left"
+              label-width="120px"
+              require-mark-placement="right-hanging"
+              class="max-w-650px py-8px"
+            >
+              <NGrid :cols="24" :x-gap="18">
+                <NFormItemGi :span="12" :label="$t('page.basedata.department.number')" path="number">
+                  <NInput v-model:value="model.number" :placeholder="$t('page.basedata.department.form.number')" />
+                </NFormItemGi>
+
+                <NFormItemGi :span="12" :label="$t('page.basedata.department.name')" path="name">
+                  <NInput v-model:value="model.name" :placeholder="$t('page.basedata.department.form.name')" />
+                </NFormItemGi>
+
+                <NFormItemGi :span="24" :label="$t('page.basedata.department.parentName')" path="parentId">
+                  <NInputGroup>
+                    <NInput
+                      :value="model.parentName"
+                      :placeholder="$t('page.basedata.department.form.parentId')"
+                      readonly
+                    />
+                    <NButton type="primary" ghost @click="parentModalVisible = true">
+                      <template #icon>
+                        <SvgIcon icon="ic:round-search" />
+                      </template>
+                    </NButton>
+                    <NButton type="warning" ghost @click="handleClearParent">
+                      <template #icon>
+                        <SvgIcon icon="ic:round-close" />
+                      </template>
+                    </NButton>
+                  </NInputGroup>
+                </NFormItemGi>
+
+                <NFormItemGi :span="24" :label="$t('page.basedata.department.description')" path="description">
+                  <NInput
+                    v-model:value="model.description"
+                    type="textarea"
+                    :rows="3"
+                    :placeholder="$t('page.basedata.department.form.description')"
+                  />
+                </NFormItemGi>
+
+                <NFormItemGi :span="24" :label="$t('page.basedata.department.fullName')" path="fullName">
+                  <NInput :value="model.fullName" placeholder="" readonly />
+                </NFormItemGi>
+              </NGrid>
+            </NForm>
+          </NTabPane>
+
+          <NTabPane name="other" :tab="$t('common.tabs.other')">
+            <NDescriptions label-placement="left" bordered :column="2" class="ms-50px max-w-600px py-8px">
+              <NDescriptionsItem :label="$t('common.documentStatus.title')">
+                {{ $t(documentStatusRecord[rawData?.documentStatus ?? 0]) }}
+              </NDescriptionsItem>
+
+              <NDescriptionsItem :span="1" label="">
+                <!-- 占位 -->
+              </NDescriptionsItem>
+
+              <NDescriptionsItem :label="$t('common.creatorName')">
+                {{ rawData?.creatorName ?? '-' }}
+              </NDescriptionsItem>
+
+              <NDescriptionsItem :label="$t('common.creationTime')">
+                {{ rawData?.creationTime != null ? dayjs(rawData?.creationTime).format('YYYY-MM-DD HH:mm:ss') : '-' }}
+              </NDescriptionsItem>
+
+              <NDescriptionsItem :label="$t('common.lastModifierName')">
+                {{ rawData?.lastModifierName ?? '-' }}
+              </NDescriptionsItem>
+
+              <NDescriptionsItem :label="$t('common.lastModificationTime')">
+                {{
+                  rawData?.lastModificationTime != null
+                    ? dayjs(rawData?.lastModificationTime).format('YYYY-MM-DD HH:mm:ss')
+                    : '-'
+                }}
+              </NDescriptionsItem>
+
+              <NDescriptionsItem :label="$t('common.approverName')">
+                {{ rawData?.approverName ?? '-' }}
+              </NDescriptionsItem>
+
+              <NDescriptionsItem :label="$t('common.approvalTime')">
+                {{ rawData?.approvalTime != null ? dayjs(rawData?.approvalTime).format('YYYY-MM-DD HH:mm:ss') : '-' }}
+              </NDescriptionsItem>
+            </NDescriptions>
+          </NTabPane>
+        </NTabs>
+      </NSpin>
+
+      <!-- 上级部门选择弹窗 -->
+      <ParentSelectModal
+        v-model:visible="parentModalVisible"
+        :exclude-id="isEdit ? id : ''"
+        @select="handleParentSelected"
+      />
+    </NCard>
+  </div>
+</template>
+
+<style scoped>
+:deep(.n-tabs-pane-wrapper) {
+  overflow-y: auto;
+}
+
+:deep(.n-tabs-tab-pad) {
+  width: 0 !important;
+}
+</style>

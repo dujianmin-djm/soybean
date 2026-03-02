@@ -22,6 +22,12 @@ declare module 'vue-router' {
      * It only works when the route mode is "static", if the route mode is "dynamic", it will be ignored
      */
     roles?: string[];
+    /**
+     * permissions of the route 根据abp的权限设计的权限字段
+     *
+     * Route can be accessed if the current user has at least one of the permissions
+     */
+    permissions?: string[];
     /** Whether to cache the route */
     keepAlive?: boolean | null;
     /**

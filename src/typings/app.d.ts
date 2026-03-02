@@ -295,7 +295,7 @@ declare namespace App {
   namespace I18n {
     type RouteKey = import('@elegant-router/types').RouteKey;
 
-    type LangType = 'en-US' | 'zh-CN';
+    type LangType = 'en' | 'zh-Hans';
 
     type LangOption = {
       label: string;
@@ -333,7 +333,9 @@ declare namespace App {
         delete: string;
         deleteSuccess: string;
         confirmDelete: string;
+        partialDeleteWarning: string;
         edit: string;
+        success: string;
         warning: string;
         error: string;
         index: string;
@@ -354,10 +356,44 @@ declare namespace App {
         trigger: string;
         update: string;
         updateSuccess: string;
+        noPermission: string;
         userCenter: string;
         yesOrNo: {
           yes: string;
           no: string;
+        };
+        save: string;
+        saveSuccess: string;
+        'save-auto-generated': string;
+        submit: string;
+        submitSuccess: string;
+        approve: string;
+        approveSuccess: string;
+        list: string;
+        resetPassword: string;
+        confirmResetPassword: string;
+        resetPasswordSuccess: string;
+        partialFailure: string;
+        detail: string;
+        creatorName: string;
+        creationTime: string;
+        lastModifierName: string;
+        lastModificationTime: string;
+        approverName: string;
+        approvalTime: string;
+        selectRequired: string;
+        selectAll: string;
+        documentStatus: {
+          title: string;
+          created: string;
+          submitted: string;
+          approved: string;
+        };
+        tabs: {
+          basic: string;
+          other: string;
+          entry: string;
+          attachment: string;
         };
       };
       request: {
@@ -553,6 +589,93 @@ declare namespace App {
           };
           creativity: string;
         };
+        manage: {
+          common: {
+            status: {
+              enable: string;
+              disable: string;
+            };
+          };
+          role: {
+            title: string;
+            roleName: string;
+            roleCode: string;
+            roleStatus: string;
+            roleDesc: string;
+            rolePublic: string;
+            roleDefault: string;
+            form: {
+              roleName: string;
+              roleCode: string;
+              roleStatus: string;
+              roleDesc: string;
+            };
+            addRole: string;
+            editRole: string;
+            menuAuth: string;
+            buttonAuth: string;
+            permissionAuth: string;
+            roleAuth: string;
+            selectAllPermission: string;
+            noPermissionData: string;
+          };
+          user: {
+            title: string;
+            userName: string;
+            userGender: string;
+            description: string;
+            userPhone: string;
+            userEmail: string;
+            userStatus: string;
+            userRole: string;
+            form: {
+              userName: string;
+              userGender: string;
+              description: string;
+              userPhone: string;
+              userEmail: string;
+              userStatus: string;
+              userRole: string;
+            };
+            addUser: string;
+            editUser: string;
+            gender: {
+              unknown: string;
+              male: string;
+              female: string;
+            };
+          };
+        };
+        userCenter: {
+          profileTitle: string;
+          changePasswordTitle: string;
+          currentPassword: string;
+          newPassword: string;
+          confirmPassword: string;
+          changePassword: string;
+          changePasswordSuccessLogoutTip: string;
+          form: {
+            currentPasswordRequired: string;
+          };
+        };
+        basedata: {
+          department: {
+            title: string;
+            name: string;
+            number: string;
+            description: string;
+            parentName: string;
+            fullName: string;
+            form: {
+              name: string;
+              number: string;
+              description: string;
+              parentId: string;
+            };
+            addDepartment: string;
+            editDepartment: string;
+          };
+        };
       };
       form: {
         required: string;
@@ -634,6 +757,8 @@ declare namespace App {
     type Response<T = unknown> = {
       /** The backend service response code */
       code: string;
+      /** The backend service response success */
+      success: boolean;
       /** The backend service response message */
       message: string;
       /** The backend service response data */

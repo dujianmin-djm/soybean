@@ -33,10 +33,16 @@ export function createRouteGuard(router: Router) {
 
     const isLogin = Boolean(localStg.get('accessToken'));
     const needLogin = !to.meta.constant;
+
+    // 同时支持 roles 和 permissions
     const routeRoles = to.meta.roles || [];
+    const routePermissions = to.meta.permissions || [];
 
     const hasRole = authStore.userInfo.roles.some(role => routeRoles.includes(role));
-    const hasAuth = authStore.isStaticSuper || !routeRoles.length || hasRole;
+    const hasPermission = authStore.hasAnyPermission(routePermissions);
+
+    const noRestriction = !routeRoles.length && !routePermissions.length;
+    const hasAuth = authStore.isStaticSuper || noRestriction || hasRole || hasPermission;
 
     // if it is login route when logged in, then switch to the root page
     if (to.name === loginRoute && isLogin) {

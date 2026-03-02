@@ -28,6 +28,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     email: '',
     phoneNumber: '',
     roles: [],
+    permissions: [],
     buttons: []
   });
 
@@ -207,6 +208,42 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     }
   }
 
+  /** 权限集合（高效查找） */
+  const permissionSet = computed(() => new Set(userInfo.permissions));
+
+  /** 判断是否拥有某个权限 */
+  function hasPermission(permission: string): boolean {
+    return permissionSet.value.has(permission);
+  }
+
+  /** 判断是否拥有任一权限 */
+  function hasAnyPermission(permissions: string[]): boolean {
+    return permissions.some(p => permissionSet.value.has(p));
+  }
+
+  /** 判断路由是否有权访问（兼容 roles + permissions） */
+  function hasRoutePermission(meta: { roles?: string[]; permissions?: string[] }): boolean {
+    const routeRoles = meta.roles || [];
+    const routePermissions = meta.permissions || [];
+
+    // 既没设 roles 也没设 permissions → 默认可访问
+    if (!routeRoles.length && !routePermissions.length) return true;
+
+    // 检查角色
+    if (routeRoles.length) {
+      const hasRole = userInfo.roles.some(role => routeRoles.includes(role));
+      if (hasRole) return true;
+    }
+
+    // 检查权限
+    if (routePermissions.length) {
+      const hasPerm = routePermissions.some(p => permissionSet.value.has(p));
+      if (hasPerm) return true;
+    }
+
+    return false;
+  }
+
   return {
     token,
     userInfo,
@@ -215,6 +252,9 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     loginLoading,
     resetStore,
     login,
-    initUserInfo
+    initUserInfo,
+    hasPermission,
+    hasAnyPermission,
+    hasRoutePermission
   };
 });

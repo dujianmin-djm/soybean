@@ -40,6 +40,69 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'basedata',
+    path: '/basedata',
+    component: 'layout.base',
+    redirect: '/404',
+    meta: {
+      title: 'basedata',
+      i18nKey: 'route.basedata',
+      icon: 'carbon:workspace',
+      order: 3
+    },
+    children: [
+      {
+        name: 'basedata_department',
+        path: '/basedata/department',
+        component: 'view.basedata_department',
+        meta: {
+          title: 'basedata_department',
+          i18nKey: 'route.basedata_department',
+          icon: 'carbon:tree-view-alt',
+          order: 1,
+          permissions: ['Pms.BaseData.Departments']
+        }
+      },
+      {
+        name: 'basedata_department-detail',
+        path: '/basedata/department-detail/:id',
+        component: 'view.basedata_department-detail',
+        props: true,
+        meta: {
+          title: 'basedata_department-detail',
+          i18nKey: 'route.basedata_department-detail',
+          hideInMenu: true,
+          activeMenu: 'basedata_department',
+          permissions: ['Pms.BaseData.Departments.Update']
+        }
+      },
+      {
+        name: 'basedata_employee',
+        path: '/basedata/employee',
+        component: 'view.basedata_employee',
+        meta: {
+          title: 'basedata_employee',
+          i18nKey: 'route.basedata_employee',
+          icon: 'carbon:user-avatar',
+          order: 3,
+          permissions: ['Pms.BaseData.Employees']
+        }
+      },
+      {
+        name: 'basedata_position',
+        path: '/basedata/position',
+        component: 'view.basedata_position',
+        meta: {
+          title: 'basedata_position',
+          i18nKey: 'route.basedata_position',
+          icon: 'carbon:user-profile',
+          order: 2,
+          permissions: ['Pms.BaseData.Positions']
+        }
+      }
+    ]
+  },
+  {
     name: 'home',
     path: '/home',
     component: 'layout.base$view.home',
@@ -76,6 +139,57 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'manage',
+    path: '/manage',
+    component: 'layout.base',
+    redirect: '/404',
+    meta: {
+      title: 'manage',
+      i18nKey: 'route.manage',
+      icon: 'carbon:cloud-service-management',
+      order: 2
+    },
+    children: [
+      {
+        name: 'manage_role',
+        path: '/manage/role',
+        component: 'view.manage_role',
+        meta: {
+          title: 'manage_role',
+          i18nKey: 'route.manage_role',
+          icon: 'carbon:user-role',
+          order: 2,
+          permissions: ['Pms.System.Roles']
+        }
+      },
+      {
+        name: 'manage_user',
+        path: '/manage/user',
+        component: 'view.manage_user',
+        meta: {
+          title: 'manage_user',
+          i18nKey: 'route.manage_user',
+          icon: 'ic:round-manage-accounts',
+          order: 1,
+          permissions: ['Pms.System.Users']
+        }
+      },
+      {
+        name: 'manage_user-detail',
+        path: '/manage/user-detail/:id',
+        component: 'view.manage_user-detail',
+        props: true,
+        meta: {
+          title: 'manage_user-detail',
+          i18nKey: 'route.manage_user-detail',
+          hideInMenu: true,
+          activeMenu: 'manage_user',
+          permissions: ['Pms.System.Users']
+        }
+      }
+    ]
+  },
+  {
     name: 'test',
     path: '/test',
     component: 'layout.base$view.test',
@@ -83,7 +197,17 @@ export const generatedRoutes: GeneratedRoute[] = [
       title: 'test',
       i18nKey: 'route.test',
       icon: 'mdi:test-tube',
-      order: 2
+      hideInMenu: true
+    }
+  },
+  {
+    name: 'user-center',
+    path: '/user-center',
+    component: 'layout.base$view.user-center',
+    meta: {
+      title: 'user-center',
+      i18nKey: 'route.user-center',
+      hideInMenu: true
     }
   }
 ];

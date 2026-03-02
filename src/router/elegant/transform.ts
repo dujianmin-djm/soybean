@@ -166,10 +166,20 @@ const routeMap: RouteMap = {
   "403": "/403",
   "404": "/404",
   "500": "/500",
+  "basedata": "/basedata",
+  "basedata_department": "/basedata/department",
+  "basedata_department-detail": "/basedata/department-detail/:id",
+  "basedata_employee": "/basedata/employee",
+  "basedata_position": "/basedata/position",
   "home": "/home",
   "iframe-page": "/iframe-page/:url",
   "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?",
-  "test": "/test"
+  "manage": "/manage",
+  "manage_role": "/manage/role",
+  "manage_user": "/manage/user",
+  "manage_user-detail": "/manage/user-detail/:id",
+  "test": "/test",
+  "user-center": "/user-center"
 };
 
 /**

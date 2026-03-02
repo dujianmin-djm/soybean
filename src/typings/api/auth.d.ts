@@ -43,8 +43,10 @@ declare namespace Api {
       phoneNumber?: string;
       /** 用户角色列表 */
       roles: string[];
+      /** 用户权限列表 */
+      permissions: string[];
       /** 按钮权限列表 */
-      buttons: string[];
+      buttons?: string[];
     }
   }
 }

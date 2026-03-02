@@ -49,16 +49,16 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
     routeStore.resetRouteCache();
   }
 
-  const locale = ref<App.I18n.LangType>(localStg.get('lang') || 'zh-CN');
+  const locale = ref<App.I18n.LangType>(localStg.get('lang') || 'zh-Hans');
 
   const localeOptions: App.I18n.LangOption[] = [
     {
       label: '中文',
-      key: 'zh-CN'
+      key: 'zh-Hans'
     },
     {
       label: 'English',
-      key: 'en-US'
+      key: 'en'
     }
   ];
 

@@ -43,6 +43,65 @@ function filterAuthRouteByRoles(route: ElegantConstRoute, roles: string[]): Eleg
 }
 
 /**
+ * Filter auth routes by roles and permissions 根据Abp的权限设计
+ *
+ * @param routes Auth routes
+ * @param roles Roles
+ * @param permissions Permissions
+ */
+export function filterAuthRoutesByRolesAndPermissions(
+  routes: ElegantConstRoute[],
+  roles: string[],
+  permissions: string[]
+) {
+  return routes.flatMap(route => filterAuthRouteByRolesAndPermissions(route, roles, permissions));
+}
+
+/**
+ * Filter auth route by roles and permissions
+ *
+ * @param route Auth route
+ * @param roles Roles
+ * @param permissions Permissions
+ */
+function filterAuthRouteByRolesAndPermissions(
+  route: ElegantConstRoute,
+  roles: string[],
+  permissions: string[]
+): ElegantConstRoute[] {
+  const routeRoles = (route.meta && route.meta.roles) || [];
+  const routePermissions = (route.meta && route.meta.permissions) || [];
+
+  // 既没设 roles 也没设 permissions → 默认可访问
+  const noRestriction = !routeRoles.length && !routePermissions.length;
+
+  // 角色匹配：用户角色命中路由要求的任一角色
+  const hasRole = routeRoles.length > 0 && routeRoles.some(role => roles.includes(role));
+
+  // 权限匹配：用户权限命中路由要求的任一权限
+  const hasPermission = routePermissions.length > 0 && routePermissions.some(perm => permissions.includes(perm));
+
+  // 满足任一条件即可访问
+  const canAccess = noRestriction || hasRole || hasPermission;
+
+  const filterRoute = { ...route };
+
+  if (filterRoute.children?.length) {
+    filterRoute.children = filterRoute.children.flatMap(item =>
+      filterAuthRouteByRolesAndPermissions(item, roles, permissions)
+    );
+  }
+
+  // 父路由的子路由全被过滤掉了 → 父路由也不显示
+  // 但如果父路由本身没有 children 定义（叶子节点），不受此影响
+  if (filterRoute.children && filterRoute.children.length === 0) {
+    return [];
+  }
+
+  return canAccess ? [filterRoute] : [];
+}
+
+/**
  * sort route by order
  *
  * @param route route
