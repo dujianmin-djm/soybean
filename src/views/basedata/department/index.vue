@@ -45,8 +45,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
       key: 'number',
       title: $t('page.basedata.department.number'),
       align: 'center',
-      minWidth: 100,
-      fixed: 'left'
+      minWidth: 100
     },
     {
       key: 'name',
@@ -159,7 +158,7 @@ function handleEdit(id: string) {
           @add="handleAdd"
           @delete="handleBatchDelete"
           @refresh="getData"
-        ></TableHeaderOperation>
+        />
       </template>
 
       <NDataTable

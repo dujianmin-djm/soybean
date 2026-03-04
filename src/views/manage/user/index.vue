@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import { reactive } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import { enableStatusRecord, userGenderRecord } from '@/constants/business';
+import { enableStatusRecord, userGenderRecord } from '@/constants/common';
 import { fetchDeleteUser, fetchGetUserList, fetchResetUserPassword } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useRouterPush } from '@/hooks/common/router';
@@ -60,7 +60,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
           return null;
         }
 
-        const tagMap: Record<Api.SystemManage.UserGender, NaiveUI.ThemeColor> = {
+        const tagMap: Record<Api.Common.Gender, NaiveUI.ThemeColor> = {
           0: 'default',
           1: 'primary',
           2: 'error'

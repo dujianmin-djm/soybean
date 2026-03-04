@@ -99,6 +99,18 @@ export const generatedRoutes: GeneratedRoute[] = [
           order: 2,
           permissions: ['Pms.BaseData.Positions']
         }
+      },
+      {
+        name: 'basedata_position-detail',
+        path: '/basedata/position-detail/:id',
+        component: 'view.basedata_position-detail',
+        meta: {
+          title: 'basedata_position-detail',
+          i18nKey: 'route.basedata_position-detail',
+          hideInMenu: true,
+          activeMenu: 'basedata_position',
+          permissions: ['Pms.BaseData.Positions.Update']
+        }
       }
     ]
   },

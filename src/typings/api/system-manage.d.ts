@@ -80,19 +80,10 @@ declare namespace Api {
       permissions: UpdatePermissionItem[];
     };
 
-    /**
-     * user gender
-     *
-     * - 0: "unknown"
-     * - 1: "male"
-     * - 2: "female"
-     */
-    type UserGender = '0' | '1' | '2';
-
     /** user */
     type User = Common.CommonRecord<{
       userName: string;
-      gender: UserGender | null;
+      gender: Common.Gender | null;
       description: string;
       phoneNumber: string;
       email: string;

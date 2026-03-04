@@ -34,6 +34,15 @@ declare namespace Api {
     type EnableStatus = '1' | '0';
 
     /**
+     * gender
+     *
+     * - 0: "unknown"
+     * - 1: "male"
+     * - 2: "female"
+     */
+    type Gender = '0' | '1' | '2';
+
+    /**
      * document status
      *
      * - 0: 创建

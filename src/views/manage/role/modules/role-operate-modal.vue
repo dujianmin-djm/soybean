@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { jsonClone } from '@sa/utils';
-import { enableStatusOptions } from '@/constants/business';
+import { enableStatusOptions } from '@/constants/common';
 import { fetchCreateRole, fetchUpdateRole } from '@/service/api';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
@@ -11,9 +11,7 @@ defineOptions({
 });
 
 interface Props {
-  /** the type of operation */
   operateType: NaiveUI.TableOperateType;
-  /** the edit row data */
   rowData?: Api.SystemManage.Role | null;
 }
 
@@ -63,8 +61,6 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
   number: defaultRequiredRule,
   isActive: defaultRequiredRule
 };
-
-// const isEdit = computed(() => props.operateType === 'edit');
 
 function handleInitModel() {
   model.value = createDefaultModel();

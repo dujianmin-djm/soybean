@@ -64,12 +64,12 @@ export function fetchDeleteRoles(ids: string[]) {
   });
 }
 
-/** get permissions for a provider (Multilanguage ) */
-export function fetchGetPermissions(providerName: string, providerKey: string, culture: string) {
+/** get permissions for a provider */
+export function fetchGetPermissions(providerName: string, providerKey: string) {
   return request<Api.SystemManage.PermissionListResult>({
     url: '/api/permission-management/permissions',
     method: 'get',
-    params: { providerName, providerKey, culture }
+    params: { providerName, providerKey }
   });
 }
 

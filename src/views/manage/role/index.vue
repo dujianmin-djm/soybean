@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import { reactive, ref } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import { enableStatusRecord } from '@/constants/business';
+import { enableStatusRecord } from '@/constants/common';
 import { fetchDeleteRole, fetchDeleteRoles, fetchGetRoleList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { defaultTransform, useNaivePaginatedTable, useTableOperate } from '@/hooks/common/table';
@@ -130,6 +130,7 @@ const {
 async function handleBatchDelete() {
   const { error } = await fetchDeleteRoles(checkedRowKeys.value);
   if (!error) {
+    window.$message?.success($t('common.deleteSuccess'));
     onBatchDeleted();
   }
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { jsonClone } from '@sa/utils';
-import { emailSuffixOptions, enableStatusOptions, userGenderOptions } from '@/constants/business';
+import { emailSuffixOptions, enableStatusOptions, userGenderOptions } from '@/constants/common';
 import { fetchCreateUser, fetchGetEnabledRoles, fetchGetUserRoles, fetchUpdateUser } from '@/service/api';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';

@@ -1,6 +1,6 @@
 const local: App.I18n.Schema = {
   system: {
-    title: '项目管理系统',
+    title: 'Soybean Admin',
     updateTitle: '系统版本更新通知',
     updateContent: '检测到系统有新版本发布，是否立即刷新页面？',
     updateConfirm: '立即刷新',
@@ -50,6 +50,15 @@ const local: App.I18n.Schema = {
     yesOrNo: {
       yes: '是',
       no: '否'
+    },
+    status: {
+      enable: '启用',
+      disable: '禁用'
+    },
+    gender: {
+      unknown: '未知',
+      male: '男',
+      female: '女'
     },
     save: '保存',
     saveSuccess: '保存成功',
@@ -263,13 +272,14 @@ const local: App.I18n.Schema = {
     home: '首页',
     'user-center': '个人中心',
     manage: '系统管理',
-    manage_user: '用户管理',
+    manage_user: '用户',
     'manage_user-detail': '用户详情',
-    manage_role: '角色管理',
+    manage_role: '角色',
     basedata: '基础管理',
     basedata_department: '部门',
     'basedata_department-detail': '部门详情',
     basedata_position: '岗位',
+    'basedata_position-detail': '岗位详情',
     basedata_employee: '员工',
     test: '测试页'
   },
@@ -350,12 +360,6 @@ const local: App.I18n.Schema = {
       creativity: '创意'
     },
     manage: {
-      common: {
-        status: {
-          enable: '启用',
-          disable: '禁用'
-        }
-      },
       role: {
         title: '角色列表',
         roleName: '角色名称',
@@ -398,12 +402,7 @@ const local: App.I18n.Schema = {
           userRole: '请选择用户角色'
         },
         addUser: '新增用户',
-        editUser: '编辑用户',
-        gender: {
-          unknown: '未知',
-          male: '男',
-          female: '女'
-        }
+        editUser: '编辑用户'
       }
     },
     userCenter: {
@@ -434,6 +433,24 @@ const local: App.I18n.Schema = {
         },
         addDepartment: '部门-新增',
         editDepartment: '部门-修改'
+      },
+      position: {
+        title: '岗位列表',
+        name: '岗位名称',
+        number: '岗位编号',
+        description: '岗位描述',
+        departmentName: '所属部门',
+        departmentFullName: '所属部门全称',
+        isLeader: '是否领导岗',
+        form: {
+          name: '请输入岗位名称',
+          number: '请输入岗位编号',
+          description: '请输入岗位描述',
+          departmentId: '请选择所属部门',
+          isLeader: '是否领导岗'
+        },
+        addPosition: '岗位-新增',
+        editPosition: '岗位-修改'
       }
     }
   },

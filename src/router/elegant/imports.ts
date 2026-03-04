@@ -23,6 +23,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   "basedata_department-detail": () => import("@/views/basedata/department-detail/[id].vue"),
   basedata_department: () => import("@/views/basedata/department/index.vue"),
   basedata_employee: () => import("@/views/basedata/employee/index.vue"),
+  "basedata_position-detail": () => import("@/views/basedata/position-detail/[id].vue"),
   basedata_position: () => import("@/views/basedata/position/index.vue"),
   home: () => import("@/views/home/index.vue"),
   manage_role: () => import("@/views/manage/role/index.vue"),

@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import dayjs from 'dayjs';
-import { enableStatusRecord, userGenderRecord } from '@/constants/business';
+import { enableStatusRecord, userGenderRecord } from '@/constants/common';
 import { fetchGetUser, fetchGetUserRoles } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { $t } from '@/locales';

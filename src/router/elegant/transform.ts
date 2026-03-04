@@ -171,6 +171,7 @@ const routeMap: RouteMap = {
   "basedata_department-detail": "/basedata/department-detail/:id",
   "basedata_employee": "/basedata/employee",
   "basedata_position": "/basedata/position",
+  "basedata_position-detail": "/basedata/position-detail/:id",
   "home": "/home",
   "iframe-page": "/iframe-page/:url",
   "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?",

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, toRaw } from 'vue';
 import { jsonClone } from '@sa/utils';
-import { enableStatusOptions } from '@/constants/business';
+import { enableStatusOptions } from '@/constants/common';
 import { translateOptions } from '@/utils/common';
 import { $t } from '@/locales';
 

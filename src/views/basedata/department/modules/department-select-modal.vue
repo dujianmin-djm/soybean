@@ -5,7 +5,7 @@ import { fetchLookupDepartment } from '@/service/api';
 import { $t } from '@/locales';
 
 defineOptions({
-  name: 'ParentSelectModal'
+  name: 'DepartmentSelectModal'
 });
 
 interface Props {
@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 interface Emits {
-  (e: 'select', department: { id: string; name: string }): void;
+  (e: 'select', department: { id: string; name: string; fullName?: string }): void;
 }
 
 const emit = defineEmits<Emits>();
@@ -90,7 +90,7 @@ function getRowProps(row: Api.BaseData.DepartmentLookup) {
       }
     },
     ondblclick: () => {
-      emit('select', { id: row.id, name: row.name });
+      emit('select', { id: row.id, name: row.name, fullName: row.fullName ?? '' });
       visible.value = false;
     }
   };
@@ -104,7 +104,7 @@ function handleConfirm() {
   }
   const selectedRow = allData.value.find(item => item.id === selectedId);
   if (selectedRow) {
-    emit('select', { id: selectedRow.id, name: selectedRow.name });
+    emit('select', { id: selectedRow.id, name: selectedRow.name, fullName: selectedRow.fullName ?? '' });
     visible.value = false;
   }
 }
@@ -156,7 +156,7 @@ watch(visible, val => {
       @update:sorter="handleSorterChange"
       @update:filters="handleFiltersChange"
       @update:page="handlePageChange"
--->
+    -->
 
     <template #footer>
       <NSpace justify="end" :size="16">

@@ -85,6 +85,14 @@ export function fetchGetPositionList(params?: Api.BaseData.PositionSearchParams)
   });
 }
 
+export function fetchLookupPosition(departmentId?: string) {
+  return request<Api.BaseData.PositionLookup[]>({
+    url: '/papi/position/lookup',
+    method: 'get',
+    params: { departmentId }
+  });
+}
+
 export function fetchGetPosition(id: string) {
   return request<Api.BaseData.Position>({
     url: `/papi/position/${id}`,

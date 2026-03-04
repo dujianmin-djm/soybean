@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import type { TreeOption } from 'naive-ui';
-import { useI18n } from 'vue-i18n';
 import { fetchGetPermissions, fetchUpdatePermissions } from '@/service/api';
 import { $t } from '@/locales';
 
@@ -205,12 +204,11 @@ function handleTreeCheck({ group, keys, options: _options, meta }: TreeCheckPara
   }
 }
 
-const { locale } = useI18n();
 async function loadPermissions() {
   loading.value = true;
   groups.value = [];
   try {
-    const { data, error } = await fetchGetPermissions('R', props.roleName, locale.value);
+    const { data, error } = await fetchGetPermissions('R', props.roleName);
     if (error || !data) return;
 
     entityDisplayName.value = data.entityDisplayName;

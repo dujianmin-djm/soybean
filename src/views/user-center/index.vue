@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, toRef } from 'vue';
-import { userGenderRecord } from '@/constants/business';
+import { userGenderRecord } from '@/constants/common';
 import { fetchChangePassword, fetchGetUser, fetchUpdateUser } from '@/service/api';
 import { useAuthStore } from '@/store/modules/auth';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
@@ -14,7 +14,7 @@ const changingPassword = ref(false);
 
 const profileForm = reactive({
   userName: '',
-  gender: null as Api.SystemManage.UserGender | null,
+  gender: null as Api.Common.Gender | null,
   description: '',
   phoneNumber: '',
   email: '',

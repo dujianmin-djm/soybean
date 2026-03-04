@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, toRaw } from 'vue';
 import { jsonClone } from '@sa/utils';
-import { enableStatusOptions, userGenderOptions } from '@/constants/business';
+import { enableStatusOptions, userGenderOptions } from '@/constants/common';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { translateOptions } from '@/utils/common';
 import { $t } from '@/locales';

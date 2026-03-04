@@ -202,7 +202,7 @@ export function useTableOperate<TableData>(
 
   /** the hook after the batch delete operation is completed */
   async function onBatchDeleted() {
-    window.$message?.success($t('common.deleteSuccess'));
+    // window.$message?.success($t('common.deleteSuccess'));
 
     checkedRowKeys.value = [];
 

@@ -39,29 +39,25 @@ declare namespace Api {
 
     type PositionSearchParams = CommonType.RecordNullable<Pick<Position, 'name' | 'number'> & CommonSearchParams>;
     type PositionList = Common.PaginatingQueryRecord<Position>;
-    type PositionCreate = Pick<Position, 'name' | 'number' | 'description' | 'departmentId' | 'isLeader'>;
-    type PositionUpdate = Pick<
+    type PositionDetail = Pick<
       Position,
-      'name' | 'number' | 'description' | 'departmentId' | 'isLeader' | 'concurrencyStamp'
+      'name' | 'number' | 'description' | 'departmentId' | 'departmentName' | 'departmentFullName' | 'isLeader'
+    >;
+    type PositionCreate = Pick<Position, 'name' | 'number' | 'description' | 'departmentId' | 'isLeader'>;
+    type PositionUpdate = PositionCreate & Pick<Position, 'concurrencyStamp'>;
+    type PositionLookup = Pick<
+      Position,
+      'id' | 'name' | 'number' | 'description' | 'departmentId' | 'departmentName' | 'departmentFullName' | 'isLeader'
     >;
 
     // ========== 员工 ==========
-
-    /**
-     * gender
-     *
-     * - 0: "unknown"
-     * - 1: "male"
-     * - 2: "female"
-     */
-    type EmployeeGender = 0 | 1 | 2;
 
     type Employee = Common.CommonRecord<{
       name: string;
       number: string;
       description: string;
       hireDate: string | null;
-      gender: EmployeeGender | null;
+      gender: Common.Gender | null;
       phone: string | null;
       email: string | null;
       address: string | null;

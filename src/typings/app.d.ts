@@ -362,6 +362,15 @@ declare namespace App {
           yes: string;
           no: string;
         };
+        status: {
+          enable: string;
+          disable: string;
+        };
+        gender: {
+          unknown: string;
+          male: string;
+          female: string;
+        };
         save: string;
         saveSuccess: string;
         'save-auto-generated': string;
@@ -590,12 +599,6 @@ declare namespace App {
           creativity: string;
         };
         manage: {
-          common: {
-            status: {
-              enable: string;
-              disable: string;
-            };
-          };
           role: {
             title: string;
             roleName: string;
@@ -639,11 +642,6 @@ declare namespace App {
             };
             addUser: string;
             editUser: string;
-            gender: {
-              unknown: string;
-              male: string;
-              female: string;
-            };
           };
         };
         userCenter: {
@@ -674,6 +672,24 @@ declare namespace App {
             };
             addDepartment: string;
             editDepartment: string;
+          };
+          position: {
+            title: string;
+            name: string;
+            number: string;
+            description: string;
+            departmentName: string;
+            departmentFullName: string;
+            isLeader: string;
+            form: {
+              name: string;
+              number: string;
+              description: string;
+              departmentId: string;
+              isLeader: string;
+            };
+            addPosition: string;
+            editPosition: string;
           };
         };
       };

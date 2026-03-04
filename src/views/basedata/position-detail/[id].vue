@@ -2,9 +2,9 @@
 import { computed, nextTick, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import dayjs from 'dayjs';
-import { documentStatusRecord } from '@/constants/common';
+import { documentStatusRecord, yesOrNoOptions } from '@/constants/common';
 import { PERMISSIONS } from '@/constants/permissions';
-import { fetchCreateDepartment, fetchGetDepartment, fetchUpdateDepartment } from '@/service/api';
+import { fetchCreatePosition, fetchGetPosition, fetchUpdatePosition } from '@/service/api';
 import { useTabStore } from '@/store/modules/tab';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { useRouterPush } from '@/hooks/common/router';
@@ -21,7 +21,7 @@ const route = useRoute();
 const router = useRouter();
 const tabStore = useTabStore();
 const { routerPushByKey } = useRouterPush();
-const { permissions } = usePermission(PERMISSIONS.BaseData.Departments);
+const { permissions } = usePermission(PERMISSIONS.BaseData.Positions);
 
 const { formRef, validate } = useNaiveForm();
 const { defaultRequiredRule } = useFormRules();
@@ -29,12 +29,12 @@ const { defaultRequiredRule } = useFormRules();
 const isEdit = computed(() => props.id !== 'add');
 const loading = ref(false);
 const saving = ref(false);
-const parentModalVisible = ref(false);
+const departmentModalVisible = ref(false);
 const activeTab = ref('basic');
 
-const rawData = ref<Api.BaseData.Department | null>(null);
+const rawData = ref<Api.BaseData.Position | null>(null);
 
-type Model = Api.BaseData.DepartmentCreate;
+type Model = Api.BaseData.PositionDetail;
 
 const model = ref<Model>(createDefaultModel());
 
@@ -43,9 +43,10 @@ function createDefaultModel(): Model {
     number: '',
     name: '',
     description: '',
-    parentId: '',
-    parentName: '',
-    fullName: ''
+    departmentId: '',
+    departmentName: '',
+    departmentFullName: '',
+    isLeader: false
   };
 }
 
@@ -53,13 +54,12 @@ type RuleKey = Extract<keyof Model, 'number' | 'name'>;
 
 const rules = computed<Record<RuleKey, App.Global.FormRule[]>>(() => ({
   number: [defaultRequiredRule],
-  name: [defaultRequiredRule]
+  name: [defaultRequiredRule],
+  departmentId: [defaultRequiredRule]
 }));
 
 function updateTabTitle() {
-  const title = isEdit.value
-    ? $t('page.basedata.department.editDepartment')
-    : $t('page.basedata.department.addDepartment');
+  const title = isEdit.value ? $t('page.basedata.position.editPosition') : $t('page.basedata.position.addPosition');
 
   tabStore.setTabLabel(title, route.fullPath);
 }
@@ -68,29 +68,32 @@ async function fetchDetail() {
   if (!isEdit.value) return;
 
   loading.value = true;
-  const { data, error } = await fetchGetDepartment(props.id);
+  const { data, error } = await fetchGetPosition(props.id);
   if (!error && data) {
     rawData.value = data;
     model.value = {
       number: data.number ?? '',
       name: data.name ?? '',
       description: data.description ?? '',
-      parentId: data.parentId ?? '',
-      parentName: data.parentName ?? '',
-      fullName: data.fullName ?? ''
+      departmentId: data.departmentId ?? '',
+      departmentName: data.departmentName ?? '',
+      departmentFullName: data.departmentFullName ?? '',
+      isLeader: data.isLeader ?? false
     };
   }
   loading.value = false;
 }
 
-function handleParentSelected(dept: { id: string; name: string }) {
-  model.value.parentId = dept.id;
-  model.value.parentName = dept.name;
+function handleDepartmentSelected(dept: { id: string; name: string; fullName?: string }) {
+  model.value.departmentId = dept.id;
+  model.value.departmentName = dept.name;
+  model.value.departmentFullName = dept.fullName ?? '';
 }
 
-function handleClearParent() {
-  model.value.parentId = '';
-  model.value.parentName = '';
+function handleClearDepartment() {
+  model.value.departmentId = '';
+  model.value.departmentName = '';
+  model.value.departmentFullName = '';
 }
 
 async function handleSave() {
@@ -98,22 +101,20 @@ async function handleSave() {
   saving.value = true;
 
   if (isEdit.value) {
-    const { error, data } = await fetchUpdateDepartment(props.id, {
+    const { error, data } = await fetchUpdatePosition(props.id, {
       ...model.value,
       concurrencyStamp: rawData.value!.concurrencyStamp
     });
     if (!error) {
       window.$message?.success($t('common.updateSuccess'));
       rawData.value = data;
-      model.value.fullName = data.fullName;
     }
   } else {
-    const { error, data } = await fetchCreateDepartment(model.value);
+    const { error, data } = await fetchCreatePosition(model.value);
     if (!error) {
       window.$message?.success($t('common.addSuccess'));
-      // 新增成功后跳转到编辑模式
       const oldFullPath = route.fullPath;
-      await router.push(`/basedata/department-detail/${data.id}`);
+      await router.push(`/basedata/position-detail/${data.id}`);
       await nextTick();
       tabStore.removeTab(oldFullPath);
     }
@@ -122,24 +123,20 @@ async function handleSave() {
 }
 
 async function handleSubmit() {
-  // eslint-disable-next-line no-warning-comments
-  // TODO: 调用提交接口 下拉按钮
   window.$message?.info('提交功能待实现');
 }
 
 async function handleApprove() {
-  // eslint-disable-next-line no-warning-comments
-  // TODO: 调用审核接口
   window.$message?.info('审核功能待实现');
 }
 
 function handleGoList() {
-  routerPushByKey('basedata_department');
+  routerPushByKey('basedata_position');
 }
 
 onMounted(() => {
-  fetchDetail();
   updateTabTitle();
+  fetchDetail();
 });
 </script>
 
@@ -190,27 +187,38 @@ onMounted(() => {
               class="max-w-650px py-8px"
             >
               <NGrid :cols="24" :x-gap="18">
-                <NFormItemGi :span="12" :label="$t('page.basedata.department.number')" path="number">
-                  <NInput v-model:value="model.number" :placeholder="$t('page.basedata.department.form.number')" />
+                <NFormItemGi :span="12" :label="$t('page.basedata.position.number')" path="number">
+                  <NInput v-model:value="model.number" :placeholder="$t('page.basedata.position.form.number')" />
                 </NFormItemGi>
 
-                <NFormItemGi :span="12" :label="$t('page.basedata.department.name')" path="name">
-                  <NInput v-model:value="model.name" :placeholder="$t('page.basedata.department.form.name')" />
+                <NFormItemGi :span="12" :label="$t('page.basedata.position.isLeader')" path="isLeader">
+                  <NRadioGroup v-model:value="model.isLeader">
+                    <NRadio
+                      v-for="item in yesOrNoOptions"
+                      :key="item.value"
+                      :value="item.value === 'Y'"
+                      :label="$t(item.label)"
+                    />
+                  </NRadioGroup>
                 </NFormItemGi>
 
-                <NFormItemGi :span="24" :label="$t('page.basedata.department.parentName')" path="parentId">
+                <NFormItemGi :span="24" :label="$t('page.basedata.position.name')" path="name">
+                  <NInput v-model:value="model.name" :placeholder="$t('page.basedata.position.form.name')" />
+                </NFormItemGi>
+
+                <NFormItemGi :span="24" :label="$t('page.basedata.position.departmentName')" path="departmentId">
                   <NInputGroup>
                     <NInput
-                      :value="model.parentName"
-                      :placeholder="$t('page.basedata.department.form.parentId')"
+                      :value="model.departmentName"
+                      :placeholder="$t('page.basedata.position.form.departmentId')"
                       readonly
                     />
-                    <NButton type="primary" ghost @click="parentModalVisible = true">
+                    <NButton type="primary" ghost @click="departmentModalVisible = true">
                       <template #icon>
                         <SvgIcon icon="ic:round-search" />
                       </template>
                     </NButton>
-                    <NButton type="warning" ghost @click="handleClearParent">
+                    <NButton type="warning" ghost @click="handleClearDepartment">
                       <template #icon>
                         <SvgIcon icon="ic:round-close" />
                       </template>
@@ -218,17 +226,21 @@ onMounted(() => {
                   </NInputGroup>
                 </NFormItemGi>
 
-                <NFormItemGi :span="24" :label="$t('page.basedata.department.description')" path="description">
+                <NFormItemGi :span="24" :label="$t('page.basedata.position.description')" path="description">
                   <NInput
                     v-model:value="model.description"
                     type="textarea"
                     :rows="3"
-                    :placeholder="$t('page.basedata.department.form.description')"
+                    :placeholder="$t('page.basedata.position.form.description')"
                   />
                 </NFormItemGi>
 
-                <NFormItemGi :span="24" :label="$t('page.basedata.department.fullName')" path="fullName">
-                  <NInput :value="model.fullName" placeholder="" readonly />
+                <NFormItemGi
+                  :span="24"
+                  :label="$t('page.basedata.position.departmentFullName')"
+                  path="departmentFullName"
+                >
+                  <NInput :value="model.departmentFullName" placeholder="" readonly />
                 </NFormItemGi>
               </NGrid>
             </NForm>
@@ -276,11 +288,7 @@ onMounted(() => {
         </NTabs>
       </NSpin>
 
-      <DepartmentSelectModal
-        v-model:visible="parentModalVisible"
-        :exclude-id="isEdit ? id : ''"
-        @select="handleParentSelected"
-      />
+      <DepartmentSelectModal v-model:visible="departmentModalVisible" @select="handleDepartmentSelected" />
     </NCard>
   </div>
 </template>

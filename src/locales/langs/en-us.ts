@@ -1,6 +1,6 @@
 const local: App.I18n.Schema = {
   system: {
-    title: 'Project Management',
+    title: 'Soybean Admin',
     updateTitle: 'System Version Update Notification',
     updateContent: 'A new version of the system has been detected. Do you want to refresh the page immediately?',
     updateConfirm: 'Refresh immediately',
@@ -50,6 +50,15 @@ const local: App.I18n.Schema = {
     yesOrNo: {
       yes: 'Yes',
       no: 'No'
+    },
+    status: {
+      enable: 'Enable',
+      disable: 'Disable'
+    },
+    gender: {
+      unknown: 'Unknown',
+      male: 'Male',
+      female: 'Female'
     },
     save: 'Save',
     saveSuccess: 'Save Success',
@@ -267,13 +276,14 @@ const local: App.I18n.Schema = {
     home: 'Home',
     'user-center': 'User Center',
     manage: 'System Manage',
-    manage_user: 'User Manage',
+    manage_user: 'User',
     'manage_user-detail': 'User Detail',
-    manage_role: 'Role Manage',
+    manage_role: 'Role',
     basedata: 'Base Data',
     basedata_department: 'Department',
     'basedata_department-detail': 'Department Detail',
     basedata_position: 'Position',
+    'basedata_position-detail': 'Position Detail',
     basedata_employee: 'Employee',
     test: 'test'
   },
@@ -354,12 +364,6 @@ const local: App.I18n.Schema = {
       creativity: 'Creativity'
     },
     manage: {
-      common: {
-        status: {
-          enable: 'Enable',
-          disable: 'Disable'
-        }
-      },
       role: {
         title: 'Role List',
         roleName: 'Role Name',
@@ -402,12 +406,7 @@ const local: App.I18n.Schema = {
           userRole: 'Please select user role'
         },
         addUser: 'Add User',
-        editUser: 'Edit User',
-        gender: {
-          unknown: 'Unknown',
-          male: 'Male',
-          female: 'Female'
-        }
+        editUser: 'Edit User'
       }
     },
     userCenter: {
@@ -438,6 +437,24 @@ const local: App.I18n.Schema = {
         },
         addDepartment: 'Add Department',
         editDepartment: 'Edit Department'
+      },
+      position: {
+        title: 'Position List',
+        name: 'Position Name',
+        number: 'Position Number',
+        description: 'Position Description',
+        departmentName: 'Department Name',
+        departmentFullName: 'Full Department Name',
+        isLeader: 'Is Leader Position',
+        form: {
+          name: 'Please enter position name',
+          number: 'Please enter position number',
+          description: 'Please enter position description',
+          departmentId: 'Please select department',
+          isLeader: 'Is Leader Position'
+        },
+        addPosition: 'Add Position',
+        editPosition: 'Edit Position'
       }
     }
   },
