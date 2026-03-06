@@ -57,11 +57,8 @@ const rules = computed<Record<RuleKey, App.Global.FormRule[]>>(() => ({
 }));
 
 function updateTabTitle() {
-  const title = isEdit.value
-    ? $t('page.basedata.department.editDepartment')
-    : $t('page.basedata.department.addDepartment');
-
-  tabStore.setTabLabel(title, route.fullPath);
+  const i18nKey = isEdit.value ? 'page.basedata.department.editDepartment' : 'page.basedata.department.addDepartment';
+  tabStore.setTabLabelByI18nKey(i18nKey, route.fullPath);
 }
 
 async function fetchDetail() {
@@ -138,8 +135,8 @@ function handleGoList() {
 }
 
 onMounted(() => {
-  fetchDetail();
   updateTabTitle();
+  fetchDetail();
 });
 </script>
 

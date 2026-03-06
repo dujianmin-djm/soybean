@@ -92,6 +92,14 @@ const local: App.I18n.Schema = {
       other: 'Other Information',
       entry: 'Entry Information',
       attachment: 'Attachment Information'
+    },
+    tableStyle: {
+      title: 'Table Style',
+      striped: 'Striped',
+      bordered: 'Bordered',
+      singleLine: 'Column Separator Line',
+      singleColumn: 'Row Separator Line',
+      bottomBordered: 'Bottom Bordered'
     }
   },
   request: {

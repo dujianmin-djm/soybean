@@ -7,6 +7,7 @@ import { useRouteStore } from '@/store/modules/route';
 import { useRouterPush } from '@/hooks/common/router';
 import { localStg } from '@/utils/storage';
 import { SetupStoreId } from '@/enum';
+import { $t } from '@/locales';
 import { useThemeStore } from '../theme';
 import {
   extractTabsByAllRoutes,
@@ -44,6 +45,8 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
 
   /** Active tab id */
   const activeTabId = ref<string>('');
+
+  const tabI18nLabelMap = ref<Record<string, App.I18n.I18nKey>>({});
 
   /**
    * Set active tab id
@@ -115,6 +118,10 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
 
     // reset route cache
     routeStore.resetRouteCache(removedTabRouteKey);
+
+    const { [tabId]: _, ...rest } = tabI18nLabelMap.value;
+    tabI18nLabelMap.value = rest;
+    // delete tabI18nLabelMap.value[tabId];
   }
 
   /** remove active tab */
@@ -336,9 +343,19 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     return fixedTabIds.includes(tabId);
   }
 
+  /** 通过 i18n key 设置 tab 标签（语言切换时页签名自动更新） */
+  function setTabLabelByI18nKey(i18nKey: App.I18n.I18nKey, tabId: string) {
+    tabI18nLabelMap.value[tabId] = i18nKey;
+    setTabLabel($t(i18nKey), tabId);
+  }
+
   /** Update tabs by locale */
   function updateTabsByLocale() {
     tabs.value = updateTabsByI18nKey(tabs.value);
+
+    Object.entries(tabI18nLabelMap.value).forEach(([tabId, i18nKey]) => {
+      setTabLabel($t(i18nKey), tabId);
+    });
 
     if (homeTab.value) {
       homeTab.value = updateTabByI18nKey(homeTab.value);
@@ -380,6 +397,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     isTabRetain,
     updateTabsByLocale,
     getTabIdByRoute,
-    cacheTabs
+    cacheTabs,
+    setTabLabelByI18nKey
   };
 });

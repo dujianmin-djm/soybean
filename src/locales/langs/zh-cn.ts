@@ -92,6 +92,14 @@ const local: App.I18n.Schema = {
       other: '其他信息',
       entry: '明细信息',
       attachment: '附件信息'
+    },
+    tableStyle: {
+      title: '表格样式',
+      striped: '斑马纹',
+      bordered: '外边框',
+      singleLine: '列分隔线',
+      singleColumn: '行分隔线',
+      bottomBordered: '底部边框'
     }
   },
   request: {

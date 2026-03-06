@@ -6,6 +6,7 @@ import { fetchDeleteDepartment, fetchGetDepartmentList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useRouterPush } from '@/hooks/common/router';
 import { defaultTransform, useNaivePaginatedTable, useTableOperate } from '@/hooks/common/table';
+import { useTableStyle } from '@/hooks/common/table-style';
 import { usePermission } from '@/hooks/common/permission';
 import { $t } from '@/locales';
 import DepartmentSearch from './modules/department-search.vue';
@@ -13,6 +14,7 @@ import DepartmentSearch from './modules/department-search.vue';
 const appStore = useAppStore();
 const { routerPushByKey } = useRouterPush();
 const { permissions } = usePermission(PERMISSIONS.BaseData.Departments);
+const { tableStyleProps } = useTableStyle();
 
 const searchParams: Api.BaseData.DepartmentSearchParams = reactive({
   current: 1,
@@ -162,6 +164,7 @@ function handleEdit(id: string) {
       </template>
 
       <NDataTable
+        v-bind="tableStyleProps"
         v-model:checked-row-keys="checkedRowKeys"
         :columns="columns"
         :data="data"

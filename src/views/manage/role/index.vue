@@ -5,6 +5,7 @@ import { enableStatusRecord } from '@/constants/common';
 import { fetchDeleteRole, fetchDeleteRoles, fetchGetRoleList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { defaultTransform, useNaivePaginatedTable, useTableOperate } from '@/hooks/common/table';
+import { useTableStyle } from '@/hooks/common/table-style';
 import { $t } from '@/locales';
 import RoleSearch from './modules/role-search.vue';
 import RoleOperateModal from './modules/role-operate-modal.vue';
@@ -127,6 +128,8 @@ const {
   // closeDrawer
 } = useTableOperate(data, 'id', getData);
 
+const { tableStyleProps } = useTableStyle();
+
 async function handleBatchDelete() {
   const { error } = await fetchDeleteRoles(checkedRowKeys.value);
   if (!error) {
@@ -178,6 +181,7 @@ function handlePermission(roleName: string) {
         />
       </template>
       <NDataTable
+        v-bind="tableStyleProps"
         v-model:checked-row-keys="checkedRowKeys"
         :columns="columns"
         :data="data"

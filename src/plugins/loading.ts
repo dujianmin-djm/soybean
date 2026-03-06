@@ -3,7 +3,7 @@ import { getColorPalette, getRgb } from '@sa/color';
 import { DARK_CLASS } from '@/constants/app';
 import { localStg } from '@/utils/storage';
 import { toggleHtmlClass } from '@/utils/common';
-import { $t } from '@/locales';
+// import { $t } from '@/locales';
 
 export function setupLoading() {
   const themeColor = localStg.get('themeColor') || '#646cff';
@@ -37,17 +37,26 @@ export function setupLoading() {
     })
     .join('\n');
 
+  //   const loading = `
+  // <div class="fixed-center flex-col bg-layout" style="${cssVars}">
+  //   <div class="w-128px h-128px">
+  //     ${getLogoSvg()}
+  //   </div>
+  //   <div class="w-56px h-56px my-36px">
+  //     <div class="relative h-full animate-spin">
+  //       ${dot}
+  //     </div>
+  //   </div>
+  //   <h2 class="text-28px font-500 text-primary">${$t('system.title')}</h2>
+  // </div>`;
+
   const loading = `
 <div class="fixed-center flex-col bg-layout" style="${cssVars}">
-  <div class="w-128px h-128px">
-    ${getLogoSvg()}
-  </div>
   <div class="w-56px h-56px my-36px">
     <div class="relative h-full animate-spin">
       ${dot}
     </div>
   </div>
-  <h2 class="text-28px font-500 text-primary">${$t('system.title')}</h2>
 </div>`;
 
   const app = document.getElementById('app');
@@ -57,6 +66,7 @@ export function setupLoading() {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getLogoSvg() {
   const logoSvg = `<svg
         width="100%"

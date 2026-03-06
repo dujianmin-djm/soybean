@@ -95,7 +95,7 @@ export const generatedRoutes: GeneratedRoute[] = [
         meta: {
           title: 'basedata_position',
           i18nKey: 'route.basedata_position',
-          icon: 'carbon:user-profile',
+          icon: 'carbon:user-certification',
           order: 2,
           permissions: ['Pms.BaseData.Positions']
         }
@@ -181,7 +181,7 @@ export const generatedRoutes: GeneratedRoute[] = [
         meta: {
           title: 'manage_user',
           i18nKey: 'route.manage_user',
-          icon: 'ic:round-manage-accounts',
+          icon: 'carbon:user-profile',
           order: 1,
           permissions: ['Pms.System.Users']
         }

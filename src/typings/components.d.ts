@@ -41,7 +41,6 @@ declare module 'vue' {
     LangSwitch: typeof import('./../components/common/lang-switch.vue')['default']
     LookForward: typeof import('./../components/custom/look-forward.vue')['default']
     MenuToggler: typeof import('./../components/common/menu-toggler.vue')['default']
-    NAlert: typeof import('naive-ui')['NAlert']
     NAutoComplete: typeof import('naive-ui')['NAutoComplete']
     NBadge: typeof import('naive-ui')['NBadge']
     NBreadcrumb: typeof import('naive-ui')['NBreadcrumb']
@@ -104,6 +103,7 @@ declare module 'vue' {
     SystemLogo: typeof import('./../components/common/system-logo.vue')['default']
     TableColumnSetting: typeof import('./../components/advanced/table-column-setting.vue')['default']
     TableHeaderOperation: typeof import('./../components/advanced/table-header-operation.vue')['default']
+    TableStyleSetting: typeof import('./../components/advanced/table-style-setting.vue')['default']
     ThemeSchemaSwitch: typeof import('./../components/common/theme-schema-switch.vue')['default']
     WaveBg: typeof import('./../components/custom/wave-bg.vue')['default']
   }
@@ -140,7 +140,6 @@ declare global {
   const LangSwitch: typeof import('./../components/common/lang-switch.vue')['default']
   const LookForward: typeof import('./../components/custom/look-forward.vue')['default']
   const MenuToggler: typeof import('./../components/common/menu-toggler.vue')['default']
-  const NAlert: typeof import('naive-ui')['NAlert']
   const NAutoComplete: typeof import('naive-ui')['NAutoComplete']
   const NBadge: typeof import('naive-ui')['NBadge']
   const NBreadcrumb: typeof import('naive-ui')['NBreadcrumb']
@@ -203,6 +202,7 @@ declare global {
   const SystemLogo: typeof import('./../components/common/system-logo.vue')['default']
   const TableColumnSetting: typeof import('./../components/advanced/table-column-setting.vue')['default']
   const TableHeaderOperation: typeof import('./../components/advanced/table-header-operation.vue')['default']
+  const TableStyleSetting: typeof import('./../components/advanced/table-style-setting.vue')['default']
   const ThemeSchemaSwitch: typeof import('./../components/common/theme-schema-switch.vue')['default']
   const WaveBg: typeof import('./../components/custom/wave-bg.vue')['default']
 }

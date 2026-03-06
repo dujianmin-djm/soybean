@@ -7,6 +7,7 @@ import { fetchDeletePosition, fetchGetPositionList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useRouterPush } from '@/hooks/common/router';
 import { defaultTransform, useNaivePaginatedTable, useTableOperate } from '@/hooks/common/table';
+import { useTableStyle } from '@/hooks/common/table-style';
 import { usePermission } from '@/hooks/common/permission';
 import { $t } from '@/locales';
 import PositionSearch from './modules/position-search.vue';
@@ -113,6 +114,8 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
 
 const { checkedRowKeys, onBatchDeleted, onDeleted } = useTableOperate(data, 'id', getData);
 
+const { tableStyleProps } = useTableStyle();
+
 async function handleBatchDelete() {
   const ids = checkedRowKeys.value;
   window.$dialog?.warning({
@@ -175,10 +178,11 @@ function handleEdit(id: string) {
       </template>
 
       <NDataTable
+        v-bind="tableStyleProps"
         v-model:checked-row-keys="checkedRowKeys"
+        size="small"
         :columns="columns"
         :data="data"
-        size="small"
         :flex-height="!appStore.isMobile"
         :scroll-x="1062"
         :loading="loading"

@@ -6,6 +6,7 @@ import { fetchDeleteUser, fetchGetUserList, fetchResetUserPassword } from '@/ser
 import { useAppStore } from '@/store/modules/app';
 import { useRouterPush } from '@/hooks/common/router';
 import { defaultTransform, useNaivePaginatedTable, useTableOperate } from '@/hooks/common/table';
+import { useTableStyle } from '@/hooks/common/table-style';
 import { $t } from '@/locales';
 import UserOperateModal from './modules/user-operate-modal.vue';
 import UserSearch from './modules/user-search.vue';
@@ -150,6 +151,8 @@ const {
   // closeDrawer
 } = useTableOperate(data, 'id', getData);
 
+const { tableStyleProps } = useTableStyle();
+
 async function handleBatchDelete() {
   const ids = checkedRowKeys.value;
   window.$dialog?.warning({
@@ -243,6 +246,7 @@ function handleViewDetail(id: string) {
       </template>
 
       <NDataTable
+        v-bind="tableStyleProps"
         v-model:checked-row-keys="checkedRowKeys"
         :columns="columns"
         :data="data"

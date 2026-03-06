@@ -25,7 +25,7 @@ export const themeSettings: App.Theme.ThemeSetting = {
     height: 48,
     breadcrumb: {
       visible: true,
-      showIcon: true
+      showIcon: false
     },
     multilingual: {
       visible: true

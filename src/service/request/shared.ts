@@ -57,9 +57,7 @@ export function showErrorMsg(state: RequestInstanceState, message: string) {
     state.errMsgStack.push(message);
 
     window.$message?.error(message, {
-      // 设置持续时间为 0，表示不自动消失
       duration: 0,
-      // 添加关闭按钮，让用户手动关闭
       closable: true,
       onClose: () => {
         state.errMsgStack = state.errMsgStack.filter(msg => msg !== message);

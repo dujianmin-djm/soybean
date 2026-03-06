@@ -59,9 +59,8 @@ const rules = computed<Record<RuleKey, App.Global.FormRule[]>>(() => ({
 }));
 
 function updateTabTitle() {
-  const title = isEdit.value ? $t('page.basedata.position.editPosition') : $t('page.basedata.position.addPosition');
-
-  tabStore.setTabLabel(title, route.fullPath);
+  const i18nKey = isEdit.value ? 'page.basedata.position.editPosition' : 'page.basedata.position.addPosition';
+  tabStore.setTabLabelByI18nKey(i18nKey, route.fullPath);
 }
 
 async function fetchDetail() {

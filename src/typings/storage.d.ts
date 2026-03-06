@@ -39,5 +39,7 @@ declare namespace StorageType {
     };
     /** The last login user id */
     lastLoginUserId: string;
+    /** The data table style */
+    tableStyle: App.Global.TableStyle;
   }
 }

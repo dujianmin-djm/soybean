@@ -285,6 +285,14 @@ declare namespace App {
 
     /** The global dropdown key */
     type DropdownKey = 'closeCurrent' | 'closeOther' | 'closeLeft' | 'closeRight' | 'closeAll' | 'pin' | 'unpin';
+
+    type TableStyle = {
+      striped: boolean;
+      bordered: boolean;
+      singleLine: boolean;
+      singleColumn: boolean;
+      bottomBordered: boolean;
+    };
   }
 
   /**
@@ -403,6 +411,14 @@ declare namespace App {
           other: string;
           entry: string;
           attachment: string;
+        };
+        tableStyle: {
+          title: string;
+          striped: string;
+          bordered: string;
+          singleLine: string;
+          singleColumn: string;
+          bottomBordered: string;
         };
       };
       request: {

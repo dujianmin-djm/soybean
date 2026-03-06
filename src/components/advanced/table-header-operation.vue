@@ -67,6 +67,7 @@ function refresh() {
       {{ $t('common.refresh') }}
     </NButton>
     <TableColumnSetting v-model:columns="columns" />
+    <TableStyleSetting />
     <slot name="suffix"></slot>
   </NSpace>
 </template>
