@@ -2,7 +2,7 @@
 import { computed, nextTick, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import dayjs from 'dayjs';
-import { documentStatusRecord, yesOrNoOptions } from '@/constants/common';
+import { documentStatusRecord } from '@/constants/common';
 import { PERMISSIONS } from '@/constants/permissions';
 import { fetchCreatePosition, fetchGetPosition, fetchUpdatePosition } from '@/service/api';
 import { useTabStore } from '@/store/modules/tab';
@@ -192,12 +192,8 @@ onMounted(() => {
 
                 <NFormItemGi :span="12" :label="$t('page.basedata.position.isLeader')" path="isLeader">
                   <NRadioGroup v-model:value="model.isLeader">
-                    <NRadio
-                      v-for="item in yesOrNoOptions"
-                      :key="item.value"
-                      :value="item.value === 'Y'"
-                      :label="$t(item.label)"
-                    />
+                    <NRadio key="true" :value="true" :label="$t('common.yesOrNo.yes')" />
+                    <NRadio key="false" :value="false" :label="$t('common.yesOrNo.no')" />
                   </NRadioGroup>
                 </NFormItemGi>
 
@@ -225,6 +221,14 @@ onMounted(() => {
                   </NInputGroup>
                 </NFormItemGi>
 
+                <NFormItemGi
+                  :span="24"
+                  :label="$t('page.basedata.position.departmentFullName')"
+                  path="departmentFullName"
+                >
+                  <NInput :value="model.departmentFullName" placeholder="" readonly />
+                </NFormItemGi>
+
                 <NFormItemGi :span="24" :label="$t('page.basedata.position.description')" path="description">
                   <NInput
                     v-model:value="model.description"
@@ -232,14 +236,6 @@ onMounted(() => {
                     :rows="3"
                     :placeholder="$t('page.basedata.position.form.description')"
                   />
-                </NFormItemGi>
-
-                <NFormItemGi
-                  :span="24"
-                  :label="$t('page.basedata.position.departmentFullName')"
-                  path="departmentFullName"
-                >
-                  <NInput :value="model.departmentFullName" placeholder="" readonly />
                 </NFormItemGi>
               </NGrid>
             </NForm>
@@ -292,12 +288,4 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
-:deep(.n-tabs-pane-wrapper) {
-  overflow-y: auto;
-}
-
-:deep(.n-tabs-tab-pad) {
-  width: 0 !important;
-}
-</style>
+<style scoped></style>

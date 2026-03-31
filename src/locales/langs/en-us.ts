@@ -293,6 +293,7 @@ const local: App.I18n.Schema = {
     basedata_position: 'Position',
     'basedata_position-detail': 'Position Detail',
     basedata_employee: 'Employee',
+    'basedata_employee-detail': 'Employee Detail',
     test: 'test'
   },
   page: {
@@ -463,6 +464,42 @@ const local: App.I18n.Schema = {
         },
         addPosition: 'Add Position',
         editPosition: 'Edit Position'
+      },
+      employee: {
+        title: 'Employee List',
+        name: 'Employee Name',
+        number: 'Employee Number',
+        description: 'Employee Description',
+        hireDate: 'Hire Date',
+        gender: 'Gender',
+        phone: 'Phone Number',
+        email: 'Email',
+        address: 'Address',
+        primaryPositionName: 'Primary Position',
+        primaryDepartmentName: 'Primary Department',
+        employeePosition: {
+          title: 'Employee Position',
+          departmentName: 'Department Name',
+          positionName: 'Position Name',
+          startDate: 'Position Start Date',
+          isPrimary: 'Primary Position',
+          form: {
+            departmentId: 'Please select department',
+            positionId: 'Please select position'
+          }
+        },
+        form: {
+          name: 'Please enter employee name',
+          number: 'Please enter employee number',
+          description: 'Please enter employee description',
+          hireDate: 'Please select hire date',
+          gender: 'Please select gender',
+          phone: 'Please enter phone number',
+          email: 'Please enter email',
+          address: 'Please enter address'
+        },
+        addEmployee: 'Add Employee',
+        editEmployee: 'Edit Employee'
       }
     }
   },

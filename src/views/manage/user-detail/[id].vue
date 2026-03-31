@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import dayjs from 'dayjs';
-import { enableStatusRecord, userGenderRecord } from '@/constants/common';
+import { enableStatusRecord, genderRecord } from '@/constants/common';
 import { fetchGetUser, fetchGetUserRoles } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { $t } from '@/locales';
@@ -63,9 +63,9 @@ onMounted(() => {
             <template v-if="userData.gender !== null">
               <NTag
                 size="small"
-                :type="userData.gender === '1' ? 'primary' : userData.gender === '2' ? 'error' : 'default'"
+                :type="userData.gender === 1 ? 'primary' : userData.gender === 2 ? 'error' : 'default'"
               >
-                {{ $t(userGenderRecord[userData.gender]) }}
+                {{ $t(genderRecord[userData.gender]) }}
               </NTag>
             </template>
             <span v-else>-</span>

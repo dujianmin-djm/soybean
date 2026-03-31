@@ -28,10 +28,10 @@ declare namespace Api {
     /**
      * enable status
      *
-     * - "1": enabled
-     * - "0": disabled
+     * - 1: enabled
+     * - 0: disabled
      */
-    type EnableStatus = '1' | '0';
+    type EnableStatus = 1 | 0;
 
     /**
      * gender
@@ -40,7 +40,7 @@ declare namespace Api {
      * - 1: "male"
      * - 2: "female"
      */
-    type Gender = '0' | '1' | '2';
+    type Gender = 0 | 1 | 2;
 
     /**
      * document status
@@ -49,7 +49,7 @@ declare namespace Api {
      * - 1: 审核中
      * - 2: 已审核
      */
-    type DocumentStatus = '0' | '1' | '2';
+    type DocumentStatus = 0 | 1 | 2;
 
     /** common record */
     type CommonRecord<T = any> = {
@@ -64,13 +64,13 @@ declare namespace Api {
       /** record updater id */
       lastModifierId?: string;
       /** record updater name */
-      lastModifierName: string;
+      lastModifierName?: string;
       /** record update time */
       lastModificationTime?: string;
       /** record approver */
       approverId?: string;
       /** record approver name */
-      approverName: string;
+      approverName?: string;
       /** record approval time */
       approvalTime?: string;
       /** record document status */

@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { computed, toRaw } from 'vue';
 import { jsonClone } from '@sa/utils';
-import { enableStatusOptions, userGenderOptions } from '@/constants/common';
+import { enableStatusOptions, genderOptions } from '@/constants/common';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
-import { translateOptions } from '@/utils/common';
 import { $t } from '@/locales';
 
 defineOptions({
@@ -22,13 +21,13 @@ const model = defineModel<Api.SystemManage.UserSearchParams>('model', { required
 const isActiveValue = computed({
   get: () => {
     if (model.value.isActive === null) return null;
-    return model.value.isActive ? '1' : '0';
+    return model.value.isActive ? 1 : 0;
   },
-  set: (val: string | null) => {
+  set: (val: number | null) => {
     if (val === null) {
       model.value.isActive = null;
     } else {
-      model.value.isActive = val === '1';
+      model.value.isActive = val === 1;
     }
   }
 });
@@ -74,7 +73,7 @@ async function search() {
               <NSelect
                 v-model:value="model.gender"
                 :placeholder="$t('page.manage.user.form.userGender')"
-                :options="translateOptions(userGenderOptions)"
+                :options="genderOptions"
                 clearable
               />
             </NFormItemGi>
@@ -93,11 +92,11 @@ async function search() {
               <NSelect
                 v-model:value="isActiveValue"
                 :placeholder="$t('page.manage.user.form.userStatus')"
-                :options="translateOptions(enableStatusOptions)"
+                :options="enableStatusOptions"
                 clearable
               />
             </NFormItemGi>
-            <NFormItemGi span="24 m:12" class="pr-24px">
+            <NFormItemGi span="24 m:12 m:6" class="pr-24px">
               <NSpace class="w-full" justify="end">
                 <NButton @click="reset">
                   <template #icon>

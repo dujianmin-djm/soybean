@@ -56,7 +56,7 @@ const local: App.I18n.Schema = {
       disable: '禁用'
     },
     gender: {
-      unknown: '未知',
+      unknown: '保密',
       male: '男',
       female: '女'
     },
@@ -289,6 +289,7 @@ const local: App.I18n.Schema = {
     basedata_position: '岗位',
     'basedata_position-detail': '岗位详情',
     basedata_employee: '员工',
+    'basedata_employee-detail': '员工详情',
     test: '测试页'
   },
   page: {
@@ -459,6 +460,42 @@ const local: App.I18n.Schema = {
         },
         addPosition: '岗位-新增',
         editPosition: '岗位-修改'
+      },
+      employee: {
+        title: '员工列表',
+        name: '员工姓名',
+        number: '员工编号',
+        description: '描述',
+        hireDate: '入职日期',
+        gender: '性别',
+        phone: '手机号',
+        email: '邮箱',
+        address: '地址',
+        primaryPositionName: '主岗名称',
+        primaryDepartmentName: '主部门名称',
+        employeePosition: {
+          title: '员工任岗',
+          departmentName: '部门名称',
+          positionName: '岗位名称',
+          startDate: '任岗开始日期',
+          isPrimary: '主任岗',
+          form: {
+            departmentId: '请选择部门',
+            positionId: '请选择岗位'
+          }
+        },
+        form: {
+          name: '请输入员工姓名',
+          number: '请输入员工编号',
+          description: '请输入员工描述',
+          hireDate: '请选择入职日期',
+          gender: '请选择性别',
+          phone: '请输入手机号',
+          email: '请输入邮箱',
+          address: '请输入地址'
+        },
+        addEmployee: '员工-新增',
+        editEmployee: '员工-修改'
       }
     }
   },

@@ -170,6 +170,7 @@ const routeMap: RouteMap = {
   "basedata_department": "/basedata/department",
   "basedata_department-detail": "/basedata/department-detail/:id",
   "basedata_employee": "/basedata/employee",
+  "basedata_employee-detail": "/basedata/employee-detail/:id",
   "basedata_position": "/basedata/position",
   "basedata_position-detail": "/basedata/position-detail/:id",
   "home": "/home",

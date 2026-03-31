@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 interface Emits {
-  (e: 'select', position: { id: string; name: string }): void;
+  (e: 'select', position: { id: string; name: string; departmentId?: string; departmentName?: string }): void;
 }
 
 const emit = defineEmits<Emits>();
@@ -40,7 +40,7 @@ const columns: DataTableColumn<Api.BaseData.Position>[] = [
     key: 'number',
     title: () => $t('page.basedata.position.number'),
     align: 'center',
-    width: 120
+    width: 100
   },
   {
     key: 'name',
@@ -49,16 +49,17 @@ const columns: DataTableColumn<Api.BaseData.Position>[] = [
     width: 150
   },
   {
+    key: 'departmentName',
+    title: () => $t('page.basedata.position.departmentName'),
+    align: 'center',
+    minWidth: 150
+  },
+  {
     key: 'isLeader',
     title: () => $t('page.basedata.position.isLeader'),
     align: 'center',
-    width: 100
-  },
-  {
-    key: 'fullName',
-    title: () => $t('page.basedata.position.departmentName'),
-    align: 'center',
-    minWidth: 200
+    width: 120,
+    render: row => $t(row.isLeader ? 'common.yesOrNo.yes' : 'common.yesOrNo.no')
   }
 ];
 
@@ -84,6 +85,16 @@ async function fetchData() {
   loading.value = false;
 }
 
+function emitSelect(row: Api.BaseData.PositionLookup) {
+  emit('select', {
+    id: row.id,
+    name: row.name,
+    departmentId: row.departmentId ?? '',
+    departmentName: row.departmentName ?? ''
+  });
+  visible.value = false;
+}
+
 function getRowProps(row: Api.BaseData.PositionLookup) {
   return {
     style: 'cursor: pointer;',
@@ -93,7 +104,7 @@ function getRowProps(row: Api.BaseData.PositionLookup) {
       }
     },
     ondblclick: () => {
-      emit('select', { id: row.id, name: row.name });
+      emitSelect(row);
       visible.value = false;
     }
   };
@@ -107,7 +118,7 @@ function handleConfirm() {
   }
   const selectedRow = allData.value.find(item => item.id === selectedId);
   if (selectedRow) {
-    emit('select', { id: selectedRow.id, name: selectedRow.name });
+    emitSelect(selectedRow);
     visible.value = false;
   }
 }

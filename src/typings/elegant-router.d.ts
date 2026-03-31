@@ -24,6 +24,7 @@ declare module "@elegant-router/types" {
     "basedata_department": "/basedata/department";
     "basedata_department-detail": "/basedata/department-detail/:id";
     "basedata_employee": "/basedata/employee";
+    "basedata_employee-detail": "/basedata/employee-detail/:id";
     "basedata_position": "/basedata/position";
     "basedata_position-detail": "/basedata/position-detail/:id";
     "home": "/home";
@@ -99,6 +100,7 @@ declare module "@elegant-router/types" {
     | "login"
     | "basedata_department-detail"
     | "basedata_department"
+    | "basedata_employee-detail"
     | "basedata_employee"
     | "basedata_position-detail"
     | "basedata_position"

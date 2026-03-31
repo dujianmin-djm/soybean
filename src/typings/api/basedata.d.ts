@@ -71,8 +71,8 @@ declare namespace Api {
       departmentId: string;
       departmentName?: string | null;
       positionId: string;
-      positionName: string | null;
-      startDate: string | null;
+      positionName?: string | null;
+      startDate: string;
       isPrimary: boolean;
     };
     type EmployeePositionEdit = Pick<
@@ -87,12 +87,8 @@ declare namespace Api {
     type EmployeeList = Common.PaginatingQueryRecord<Employee>;
     type EmployeeCreate = Pick<
       Employee,
-      'name' | 'gender' | 'number' | 'description' | 'hireDate' | 'phone' | 'email' | 'address'
-    > & { positions: EmployeePositionEdit[] };
-
-    type EmployeeUpdate = Pick<
-      Employee,
-      'name' | 'gender' | 'number' | 'description' | 'hireDate' | 'phone' | 'email' | 'address' | 'concurrencyStamp'
-    > & { positions: EmployeePositionEdit[] };
+      'name' | 'gender' | 'number' | 'description' | 'hireDate' | 'phone' | 'email' | 'address' | 'positions'
+    >;
+    type EmployeeUpdate = EmployeeCreate & Pick<Employee, 'concurrencyStamp'>;
   }
 }

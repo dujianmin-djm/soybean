@@ -265,21 +265,21 @@ function getColumnChecks<Column extends NaiveUI.TableColumn<any>>(
       checks.push({
         key: column.key as string,
         title: column.title!,
-        checked: true,
+        checked: (column as any).visible ?? true,
         visible: getColumnVisible?.(column) ?? true
       });
     } else if (column.type === 'selection') {
       checks.push({
         key: SELECTION_KEY,
         title: $t('common.check'),
-        checked: true,
+        checked: (column as any).visible ?? true,
         visible: getColumnVisible?.(column) ?? false
       });
     } else if (column.type === 'expand') {
       checks.push({
         key: EXPAND_KEY,
         title: $t('common.expandColumn'),
-        checked: true,
+        checked: (column as any).visible ?? true,
         visible: getColumnVisible?.(column) ?? false
       });
     }

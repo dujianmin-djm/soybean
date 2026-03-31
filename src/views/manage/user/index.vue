@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import { reactive } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import { enableStatusRecord, userGenderRecord } from '@/constants/common';
+import { enableStatusRecord, genderRecord } from '@/constants/common';
 import { fetchDeleteUser, fetchGetUserList, fetchResetUserPassword } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useRouterPush } from '@/hooks/common/router';
@@ -60,15 +60,12 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         if (row.gender === null) {
           return null;
         }
-
         const tagMap: Record<Api.Common.Gender, NaiveUI.ThemeColor> = {
           0: 'default',
           1: 'primary',
           2: 'error'
         };
-
-        const label = $t(userGenderRecord[row.gender]);
-
+        const label = $t(genderRecord[row.gender]);
         return <NTag type={tagMap[row.gender]}>{label}</NTag>;
       }
     },
@@ -99,14 +96,11 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         if (row.isActive === null) {
           return null;
         }
-
         const tagMap: Record<Api.Common.EnableStatus, NaiveUI.ThemeColor> = {
           1: 'success',
           0: 'warning'
         };
-
         const label = $t(enableStatusRecord[row.isActive ? 1 : 0]);
-
         return <NTag type={tagMap[row.isActive ? 1 : 0]}>{label}</NTag>;
       }
     },

@@ -2,7 +2,6 @@
 import { computed, toRaw } from 'vue';
 import { jsonClone } from '@sa/utils';
 import { enableStatusOptions } from '@/constants/common';
-import { translateOptions } from '@/utils/common';
 import { $t } from '@/locales';
 
 defineOptions({
@@ -20,13 +19,13 @@ const model = defineModel<Api.SystemManage.RoleSearchParams>('model', { required
 const isActiveValue = computed({
   get: () => {
     if (model.value.isActive === null) return null;
-    return model.value.isActive ? '1' : '0';
+    return model.value.isActive ? 1 : 0;
   },
-  set: (val: string | null) => {
+  set: (val: number | null) => {
     if (val === null) {
       model.value.isActive = null;
     } else {
-      model.value.isActive = val === '1';
+      model.value.isActive = val === 1;
     }
   }
 });
@@ -58,7 +57,7 @@ function search() {
               <NSelect
                 v-model:value="isActiveValue"
                 :placeholder="$t('page.manage.role.form.roleStatus')"
-                :options="translateOptions(enableStatusOptions)"
+                :options="enableStatusOptions"
                 clearable
               />
             </NFormItemGi>

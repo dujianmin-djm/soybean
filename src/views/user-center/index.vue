@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, toRef } from 'vue';
-import { userGenderRecord } from '@/constants/common';
+import { genderOptions } from '@/constants/common';
 import { fetchChangePassword, fetchGetUser, fetchUpdateUser } from '@/service/api';
 import { useAuthStore } from '@/store/modules/auth';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
@@ -26,13 +26,6 @@ const passwordForm = reactive({
   newPassword: '',
   confirmPassword: ''
 });
-
-const genderOptions = computed(() =>
-  Object.entries(userGenderRecord).map(([key, label]) => ({
-    label: $t(label),
-    value: Number(key)
-  }))
-);
 
 const { formRules, createRequiredRule, createConfirmPwdRule } = useFormRules();
 const { formRef: profileFormRef, validate: validateProfile } = useNaiveForm();

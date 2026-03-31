@@ -707,6 +707,42 @@ declare namespace App {
             addPosition: string;
             editPosition: string;
           };
+          employee: {
+            title: string;
+            name: string;
+            number: string;
+            description: string;
+            hireDate: string;
+            gender: string;
+            phone: string;
+            email: string;
+            address: string;
+            primaryPositionName: string;
+            primaryDepartmentName: string;
+            employeePosition: {
+              title: string;
+              departmentName: string;
+              positionName: string;
+              startDate: string;
+              isPrimary: string;
+              form: {
+                departmentId: string;
+                positionId: string;
+              };
+            };
+            form: {
+              name: string;
+              number: string;
+              description: string;
+              hireDate: string;
+              gender: string;
+              phone: string;
+              email: string;
+              address: string;
+            };
+            addEmployee: string;
+            editEmployee: string;
+          };
         };
       };
       form: {

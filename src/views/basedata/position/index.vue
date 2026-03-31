@@ -2,7 +2,6 @@
 import { reactive } from 'vue';
 import { NButton, NPopconfirm } from 'naive-ui';
 import { PERMISSIONS } from '@/constants/permissions';
-import { yesOrNoRecord } from '@/constants/common';
 import { fetchDeletePosition, fetchGetPositionList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useRouterPush } from '@/hooks/common/router';
@@ -70,7 +69,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         if (row.isLeader === null) {
           return null;
         }
-        const label = $t(yesOrNoRecord[row.isLeader ? 'Y' : 'N']);
+        const label = $t(row.isLeader ? 'common.yesOrNo.yes' : 'common.yesOrNo.no');
         return <NTag type={row.isLeader ? 'success' : 'default'}>{label}</NTag>;
       }
     },

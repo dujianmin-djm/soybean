@@ -37,6 +37,14 @@ export function translateOptions(options: CommonType.Option<string, App.I18n.I18
   }));
 }
 
+// 直接将 record 转换为 option，并翻译 label
+export function transformRecordToTranslatedOption<T extends Record<string, App.I18n.I18nKey>>(record: T) {
+  return Object.entries(record).map(([value, label]) => ({
+    value: Number(value),
+    label: $t(label)
+  })) as CommonType.Option<keyof T, T[keyof T]>[];
+}
+
 /**
  * Toggle html class
  *

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { jsonClone } from '@sa/utils';
-import { emailSuffixOptions, enableStatusOptions, userGenderOptions } from '@/constants/common';
+import { emailSuffixOptions, genderOptions } from '@/constants/common';
 import { fetchCreateUser, fetchGetEnabledRoles, fetchGetUserRoles, fetchUpdateUser } from '@/service/api';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
@@ -130,7 +130,7 @@ watch(visible, () => {
   }
 });
 
-const filteredGenderOptions = computed(() => userGenderOptions.filter(item => Number(item.value) !== 0));
+const filteredGenderOptions = computed(() => genderOptions.filter(item => Number(item.value) !== 0));
 
 const emailOptions = computed(() => {
   const prefix = model.value.email.split('@')[0];
@@ -170,18 +170,14 @@ const emailOptions = computed(() => {
                 v-for="item in filteredGenderOptions"
                 :key="item.value"
                 :value="Number(item.value)"
-                :label="$t(item.label)"
+                :label="item.label"
               />
             </NRadioGroup>
           </NFormItemGi>
           <NFormItemGi :label="$t('page.manage.user.userStatus')" path="isActive">
             <NRadioGroup v-model:value="model.isActive">
-              <NRadio
-                v-for="item in enableStatusOptions"
-                :key="item.value"
-                :value="item.value === '1'"
-                :label="$t(item.label)"
-              />
+              <NRadio key="true" :value="true" :label="$t('common.status.enable')" />
+              <NRadio key="false" :value="false" :label="$t('common.status.disable')" />
             </NRadioGroup>
           </NFormItemGi>
         </NGrid>

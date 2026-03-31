@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { jsonClone } from '@sa/utils';
-import { enableStatusOptions } from '@/constants/common';
 import { fetchCreateRole, fetchUpdateRole } from '@/service/api';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
@@ -70,7 +69,7 @@ function handleInitModel() {
   }
 }
 
-function closeDrawer() {
+function closeModal() {
   visible.value = false;
 }
 
@@ -90,7 +89,7 @@ async function handleSubmit() {
     window.$message?.success($t('common.updateSuccess'));
   }
 
-  closeDrawer();
+  closeModal();
   emit('submitted');
 }
 
@@ -117,12 +116,8 @@ watch(visible, () => {
         </NFormItem>
         <NFormItem :label="$t('page.manage.role.roleStatus')" path="isActive">
           <NRadioGroup v-model:value="model.isActive">
-            <NRadio
-              v-for="item in enableStatusOptions"
-              :key="item.value"
-              :value="item.value === '1'"
-              :label="$t(item.label)"
-            />
+            <NRadio key="true" :value="true" :label="$t('common.status.enable')" />
+            <NRadio key="false" :value="false" :label="$t('common.status.disable')" />
           </NRadioGroup>
         </NFormItem>
         <NSpace align="center" :size="24">
@@ -139,7 +134,7 @@ watch(visible, () => {
     </NScrollbar>
     <template #footer>
       <NSpace justify="end" :size="16">
-        <NButton @click="closeDrawer">{{ $t('common.cancel') }}</NButton>
+        <NButton @click="closeModal">{{ $t('common.cancel') }}</NButton>
         <NButton type="primary" @click="handleSubmit">{{ $t('common.confirm') }}</NButton>
       </NSpace>
     </template>
